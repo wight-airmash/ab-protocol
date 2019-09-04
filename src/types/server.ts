@@ -148,3 +148,8 @@ export const GAME_STATE_NAMES = Object.assign(
   {},
   ...Object.entries(GAME_STATE_CODES).map(([name, code]) => ({ [code]: name }))
 );
+
+export const MAP_SIZE = {
+  WIDTH: 32768,
+  HEIGHT: 16384,
+};
