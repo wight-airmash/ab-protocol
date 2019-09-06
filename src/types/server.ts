@@ -1,5 +1,11 @@
 /**
- * SERVER_PACKETS.ERROR types
+ * Protocol time, 10^-5 seconds.
+ * Started from 0 at the moment of the server start.
+ */
+export type ClockTime = number;
+
+/**
+ * SERVER_PACKETS.ERROR types.
  */
 export enum SERVER_ERRORS {
   PACKET_FLOODING_DISCONNECT = 1,
@@ -22,7 +28,7 @@ export enum SERVER_ERRORS {
 }
 
 /**
- * SERVER_PACKETS.SERVER_MESSAGE types
+ * SERVER_PACKETS.SERVER_MESSAGE types.
  */
 export enum SERVER_MESSAGE_TYPES {
   ALERT = 1,
@@ -30,15 +36,22 @@ export enum SERVER_MESSAGE_TYPES {
 }
 
 /**
- * SERVER_PACKETS.COMMAND_REPLY types
+ * SERVER_PACKETS.COMMAND_REPLY types.
  */
 export enum COMMAND_REPLY_TYPES {
+  /**
+   * Special notification at the bottom of the chat.
+   */
   CHAT = 0,
+
+  /**
+   * Popup. Use only for debug.
+   */
   DEBUG = 1,
 }
 
 /**
- * SERVER_PACKETS.EVENT_LEAVEHORIZON types
+ * SERVER_PACKETS.EVENT_LEAVEHORIZON types.
  */
 export enum LEAVE_HORIZON_TYPES {
   PLAYER = 0,
@@ -63,8 +76,8 @@ export enum MOB_TYPES {
 }
 
 /**
- * EXPIRED — box or projectile despawned
- * PICKUP — player picked up a box
+ * EXPIRED — box or projectile despawned.
+ * PICKUP — player picked up a box.
  */
 export enum MOB_DESPAWN_TYPES {
   EXPIRED = 0,
@@ -76,8 +89,28 @@ export enum PLAYER_LEVEL_UPDATE_TYPES {
   LEVELUP = 1,
 }
 
+export enum PLAYER_STATUS {
+  /**
+   * On the map.
+   */
+  ALIVE = 0,
+
+  /**
+   * Dead or spectate
+   */
+  INACTIVE = 1,
+}
+
+export enum PLAYER_UPGRADE_TYPES {
+  LOST = 0,
+  SPEED = 1,
+  DEFENSE = 2,
+  ENERGY = 3,
+  MISSILE = 4,
+}
+
 /**
- * SERVER_PACKETS.SERVER_CUSTOM types
+ * SERVER_PACKETS.SERVER_CUSTOM types.
  */
 export enum SERVER_CUSTOM_TYPES {
   CTF = 2,
@@ -85,7 +118,7 @@ export enum SERVER_CUSTOM_TYPES {
 }
 
 /**
- * SERVER_PACKETS.PLAYER_POWERUP types
+ * SERVER_PACKETS.PLAYER_POWERUP types.
  */
 export enum PLAYER_POWERUP_TYPES {
   SHIELD = 1,
@@ -98,8 +131,15 @@ export enum CTF_TEAMS {
 }
 
 export enum CTF_FLAG_STATE {
+  /**
+   * Flag dropped.
+   */
   STATIC = 1,
-  DYNAMIC = 1,
+
+  /**
+   * Frag currently owned by player.
+   */
+  DYNAMIC = 2,
 }
 
 /**
@@ -110,6 +150,11 @@ export enum CTF_CAPTURE_BOUNTY {
   BASE = 100,
   INCREMENT = 100,
   MAX = 1000,
+}
+
+export enum BTR_FIREWALL_STATUS {
+  INACTIVE = 0,
+  ACTIVE = 1,
 }
 
 /**
