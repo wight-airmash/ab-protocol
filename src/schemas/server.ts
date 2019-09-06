@@ -13,7 +13,7 @@ import {
   PLAYER_POWERUP_TYPES,
 } from '../types/server';
 
-interface LoginPlayer {
+export interface LoginPlayer {
   id?: number;
   status?: number;
   level?: number;
@@ -93,7 +93,7 @@ export interface PlayerUpdate extends WSPacket {
   speedY?: number;
 }
 
-interface PlayerFireProjectile {
+export interface PlayerFireProjectile {
   id?: number;
   type?: number;
   posX?: number;
@@ -126,7 +126,7 @@ export interface PlayerFlag extends WSPacket {
   flag?: number;
 }
 
-interface PlayerHitPlayer {
+export interface PlayerHitPlayer {
   id?: number;
   health?: number;
   healthRegen?: number;
@@ -173,7 +173,7 @@ export interface PlayerLevel extends WSPacket {
   level?: number;
 }
 
-interface PlayerReteamPlayers {
+export interface PlayerReteamPlayers {
   id?: number;
   team?: number;
 }
@@ -209,7 +209,7 @@ export interface GameFirewall extends WSPacket {
   speed?: number;
 }
 
-interface EventRepelPlayer {
+export interface EventRepelPlayer {
   id?: number;
   keystate?: number;
   posX?: number;
@@ -223,7 +223,7 @@ interface EventRepelPlayer {
   playerHealthRegen?: number;
 }
 
-interface EventRepelMob {
+export interface EventRepelMob {
   id?: number;
   type?: number;
   posX?: number;
@@ -326,13 +326,13 @@ export interface ScoreUpdate extends WSPacket {
   totaldeaths?: number;
 }
 
-interface ScoreBoardData {
+export interface ScoreBoardData {
   id?: number;
   score?: number;
   level?: number;
 }
 
-interface ScoreBoardRanking {
+export interface ScoreBoardRanking {
   id?: number;
   x?: number;
   y?: number;
@@ -343,7 +343,7 @@ export interface ScoreBoard extends WSPacket {
   rankings?: ScoreBoardRanking[];
 }
 
-interface ScoreDetailedScore {
+export interface ScoreDetailedScore {
   id?: number;
   level?: number;
   score?: number;
@@ -357,7 +357,7 @@ export interface ScoreDetailed extends WSPacket {
   scores?: ScoreDetailedScore[];
 }
 
-interface ScoreDetailedCtfScore {
+export interface ScoreDetailedCtfScore {
   id?: number;
   level?: number;
   captures?: number;
@@ -372,7 +372,7 @@ export interface ScoreDetailedCtf extends WSPacket {
   scores?: ScoreDetailedCtfScore[];
 }
 
-interface ScoreDetailedBtrScore {
+export interface ScoreDetailedBtrScore {
   id?: number;
   level?: number;
   alive?: boolean;
