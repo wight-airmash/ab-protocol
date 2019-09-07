@@ -22,7 +22,7 @@ import {
   Teamchat,
   Votemute,
   Localping,
-} from '../schemas/client';
+} from '../types/packets-client';
 
 export default {
   [packet.LOGIN]: (msg: Login): ArrayBuffer => {

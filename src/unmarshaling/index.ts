@@ -342,6 +342,13 @@ const unmarshal = (
   return message;
 };
 
+/**
+ * Unmarshal client binary packet to protocol message.
+ * Pre generated converters are a bit faster.
+ *
+ * @param message
+ * @param usePredefinedMarshal use pre generated converters.
+ */
 const unmarshalClientMessage = (
   message: ArrayBuffer,
   usePredefinedMarshal = true
@@ -349,6 +356,13 @@ const unmarshalClientMessage = (
   return unmarshal(message, CLIENT_BUFFER, usePredefinedMarshal);
 };
 
+/**
+ * Unmarshal server binary packet to protocol message.
+ * Pre generated converters are a bit faster.
+ *
+ * @param message
+ * @param usePredefinedMarshal use pre generated converters.
+ */
 const unmarshalServerMessage = (
   message: ArrayBuffer,
   usePredefinedMarshal = true

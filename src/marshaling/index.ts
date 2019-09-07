@@ -326,6 +326,13 @@ const marshal = (
   return buffer;
 };
 
+/**
+ * Marshal client message object to binary packet.
+ * Pre generated converters are a bit faster.
+ *
+ * @param message
+ * @param usePredefinedMarshal use pre generated converters.
+ */
 const marshalClientMessage = (
   message: ProtocolPacket,
   usePredefinedMarshal = true
@@ -333,6 +340,13 @@ const marshalClientMessage = (
   return marshal(message, CLIENT_MESSAGE, usePredefinedMarshal);
 };
 
+/**
+ * Marshal server message object to binary packet.
+ * Pre generated converters are a bit faster.
+ *
+ * @param message
+ * @param usePredefinedMarshal use pre generated converters.
+ */
 const marshalServerMessage = (
   message: ProtocolPacket,
   usePredefinedMarshal = true

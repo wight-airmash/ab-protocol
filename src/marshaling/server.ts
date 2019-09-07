@@ -54,7 +54,7 @@ import {
   ScoreDetailedBtr,
   ServerMessage,
   ServerCustom,
-} from '../schemas/server';
+} from '../types/packets-server';
 
 export default {
   [packet.LOGIN]: (msg: Login): ArrayBuffer => {
