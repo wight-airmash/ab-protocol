@@ -2,8 +2,12 @@
 /* eslint-disable no-bitwise */
 import { StringEncodeError, StringDecodeError } from './errors';
 
-// https://gist.github.com/pascaldekloe/62546103a1576803dade9269ccf76330
-// Marshals a string to an Uint8Array.
+/**
+ * Marshals a string to an Uint8Array.
+ * https://gist.github.com/pascaldekloe/62546103a1576803dade9269ccf76330
+ *
+ * @param s
+ */
 const encodeUTF8 = (s: string): Uint8Array => {
   let i = 0;
   const bytes = new Uint8Array(s.length * 4);
@@ -47,7 +51,11 @@ const encodeUTF8 = (s: string): Uint8Array => {
   return bytes.subarray(0, i);
 };
 
-// Unmarshals a string from an Uint8Array.
+/**
+ * Unmarshals a string from an Uint8Array.
+ *
+ * @param bytes
+ */
 const decodeUTF8 = (bytes: Uint8Array): string => {
   let i = 0;
   let s = '';
