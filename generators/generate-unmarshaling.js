@@ -106,9 +106,9 @@ Object.entries(DATA_TYPES).forEach(([key, value]) => {
   });
 
   if (importName === 'client') {
-    codeLn("} from '../schemas/client';");
+    codeLn("} from '../types/packets-client';");
   } else {
-    codeLn("} from '../schemas/server';");
+    codeLn("} from '../types/packets-server';");
   }
 
   code('export default {');
