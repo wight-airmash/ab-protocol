@@ -137,7 +137,7 @@ export interface Chat extends ProtocolPacket {
  */
 export interface Whisper extends ProtocolPacket {
   /**
-   * Recepient ID.
+   * Recipient ID.
    */
   id?: number;
 
