@@ -73,6 +73,9 @@ export enum MOB_TYPES {
   UPGRADE = 4,
   SHIELD = 8,
   INFERNO = 9,
+
+  // BTR
+  FIREWALL = 200,
 }
 
 /**
