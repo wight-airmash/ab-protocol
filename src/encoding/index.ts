@@ -1,4 +1,4 @@
-import { Keystate } from "../types/client";
+import { Keystate } from '../types/client';
 
 export const encodeUpgrades = (speed: number, shield: number, inferno: number): number => {
   return (speed & 7) | (shield << 3) | (inferno << 4);
