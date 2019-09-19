@@ -1,13 +1,8 @@
+import { Keystate } from "../types/client";
+
 export const encodeUpgrades = (speed: number, shield: number, inferno: number): number => {
   return (speed & 7) | (shield << 3) | (inferno << 4);
 };
-
-interface Keystate {
-  UP: boolean;
-  DOWN: boolean;
-  LEFT: boolean;
-  RIGHT: boolean;
-}
 
 export const encodeKeystate = (
   keystate: Keystate,
