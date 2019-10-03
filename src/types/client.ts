@@ -10,7 +10,6 @@ export enum KEY_CODES {
   SPECIAL = 6,
 }
 
-
 export interface Keystate {
     UP: boolean;
     DOWN: boolean;
