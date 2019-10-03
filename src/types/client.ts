@@ -11,10 +11,10 @@ export enum KEY_CODES {
 }
 
 export interface Keystate {
-    UP: boolean;
-    DOWN: boolean;
-    LEFT: boolean;
-    RIGHT: boolean;
+  UP: boolean;
+  DOWN: boolean;
+  LEFT: boolean;
+  RIGHT: boolean;
 }
 
 export const KEY_NAMES = Object.assign(
