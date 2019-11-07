@@ -39,19 +39,19 @@
   "pre-commit": "lint-staged",
   "dependencies": {},
   "devDependencies": {
-    "@types/node": "^12.7.5",
-    "@typescript-eslint/eslint-plugin": "^2.3.0",
-    "@typescript-eslint/parser": "^2.3.0",
-    "eslint": "^6.4.0",
+    "@types/node": "^12.12.6",
+    "@typescript-eslint/eslint-plugin": "^2.6.1",
+    "@typescript-eslint/parser": "^2.6.1",
+    "eslint": "^6.6.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-config-prettier": "^6.3.0",
+    "eslint-config-prettier": "^6.5.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-prettier": "^3.1.1",
-    "lint-staged": "^9.2.5",
+    "lint-staged": "^9.4.2",
     "pre-commit": "^1.2.2",
     "prettier": "^1.18.2",
-    "typescript": "^3.6.3"
+    "typescript": "^3.7.2"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
