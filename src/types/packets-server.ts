@@ -1184,11 +1184,7 @@ export interface ScoreUpdate extends ProtocolPacket {
   /**
    * Only for accounts.
    *
-   * Total score acquired by player at the current level.
-   * Total score earned by player over the entile account life of
-   * an account = result of `levelToBouty` + this `earnings` value.
-   *
-   * See `levelToBouty` lib function.
+   * Total score acquired by player over the entire account life.
    */
   earnings?: number;
 
