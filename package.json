@@ -4,7 +4,6 @@
   "description": "ab-protocol library.",
   "author": "wight",
   "license": "MIT",
-  "type": "module",
   "main": "./dist/lib.js",
   "typings": "./dist/lib.d.ts",
   "scripts": {
