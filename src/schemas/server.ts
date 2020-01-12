@@ -64,7 +64,7 @@ export default {
   [SERVER_PACKETS.PLAYER_UPDATE]: [
     ['clock', DATA_TYPES.uint32],
     ['id', DATA_TYPES.uint16],
-    ['keystate', DATA_TYPES.uint8],
+    ['keystate', DATA_TYPES.uint16],
     ['upgrades', DATA_TYPES.uint8],
     ['posX', DATA_TYPES.coord24],
     ['posY', DATA_TYPES.coord24],
@@ -192,7 +192,7 @@ export default {
       DATA_TYPES.arraysmall,
       [
         ['id', DATA_TYPES.uint16],
-        ['keystate', DATA_TYPES.uint8],
+        ['keystate', DATA_TYPES.uint16],
         ['posX', DATA_TYPES.coordx],
         ['posY', DATA_TYPES.coordy],
         ['rot', DATA_TYPES.rotation],
@@ -237,7 +237,7 @@ export default {
   [SERVER_PACKETS.EVENT_BOUNCE]: [
     ['clock', DATA_TYPES.uint32],
     ['id', DATA_TYPES.uint16],
-    ['keystate', DATA_TYPES.uint8],
+    ['keystate', DATA_TYPES.uint16],
     ['posX', DATA_TYPES.coord24],
     ['posY', DATA_TYPES.coord24],
     ['rot', DATA_TYPES.rotation],

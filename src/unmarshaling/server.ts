@@ -358,9 +358,9 @@ export default {
     msg.id = dataView.getUint16(readIndex, true);
     readIndex += 2;
 
-    // keystate, uint8
-    msg.keystate = dataView.getUint8(readIndex);
-    readIndex += 1;
+    // keystate, uint16
+    msg.keystate = dataView.getUint16(readIndex);
+    readIndex += 2;
 
     // upgrades, uint8
     msg.upgrades = dataView.getUint8(readIndex);
@@ -891,9 +891,9 @@ export default {
         arrayElement.id = dataView.getUint16(readIndex, true);
         readIndex += 2;
 
-        // keystate, uint8
-        arrayElement.keystate = dataView.getUint8(readIndex);
-        readIndex += 1;
+        // keystate, uint16
+        arrayElement.keystate = dataView.getUint16(readIndex);
+        readIndex += 2;
 
         // posX, coordx
         arrayElement.posX = (dataView.getUint16(readIndex, true) - 32768) / 2;
@@ -1061,9 +1061,9 @@ export default {
     msg.id = dataView.getUint16(readIndex, true);
     readIndex += 2;
 
-    // keystate, uint8
-    msg.keystate = dataView.getUint8(readIndex);
-    readIndex += 1;
+    // keystate, uint16
+    msg.keystate = dataView.getUint16(readIndex);
+    readIndex += 2;
 
     // posX, coord24
     {

@@ -9,7 +9,8 @@ export const encodeKeystate = (
   boost: boolean,
   strafe: boolean,
   stealthed: boolean,
-  flagspeed: boolean
+  flagspeed: boolean,
+  stunned: boolean
 ): number => {
   const down = keystate.DOWN === true ? 1 : 0;
 
@@ -22,6 +23,7 @@ export const encodeKeystate = (
     ((boost === true ? 1 : 0) << 4) |
     ((strafe === true ? 1 : 0) << 5) |
     ((stealthed === true ? 1 : 0) << 6) |
-    ((flagspeed === true ? 1 : 0) << 7)
+    ((flagspeed === true ? 1 : 0) << 7) |
+    ((stunned === true ? 1 : 0) << 8)
   );
 };

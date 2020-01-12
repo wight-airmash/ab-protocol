@@ -44,6 +44,7 @@ export const decodeKeystate = (
   strafe: boolean;
   stealthed: boolean;
   flagspeed: boolean;
+  stunned: boolean;
 } => {
   return {
     keystate: {
@@ -56,6 +57,7 @@ export const decodeKeystate = (
     strafe: (keystate & (1 << 5)) === 1 << 5,
     stealthed: (keystate & (1 << 6)) === 1 << 6,
     flagspeed: (keystate & (1 << 7)) === 1 << 7,
+    stunned: (keystate & (1 << 8)) === 1 << 8,
   };
 };
 

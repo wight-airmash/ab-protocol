@@ -8,6 +8,7 @@ export enum KEY_CODES {
   RIGHT = 4,
   FIRE = 5,
   SPECIAL = 6,
+    ABILITY = 7,
 }
 
 export interface Keystate {

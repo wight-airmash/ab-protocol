@@ -375,7 +375,7 @@ export default {
   },
 
   [packet.PLAYER_UPDATE]: (msg: PlayerUpdate): ArrayBuffer => {
-    const buffer = new ArrayBuffer(21);
+    const buffer = new ArrayBuffer(22);
     const dataView = new DataView(buffer);
 
     let offset = 0;
@@ -391,9 +391,9 @@ export default {
     dataView.setUint16(offset, msg.id, true);
     offset += 2;
 
-    // keystate, uint8
-    dataView.setUint8(offset, msg.keystate);
-    offset += 1;
+    // keystate, uint16
+    dataView.setUint16(offset, msg.keystate);
+    offset += 2;
 
     // upgrades, uint8
     dataView.setUint8(offset, msg.upgrades);
@@ -955,7 +955,7 @@ export default {
 
     // Array "players" size calculation
     for (let i = 0; i < msg.players.length; i += 1) {
-      arraysSize += 19;
+      arraysSize += 20;
     }
 
     // Array "mobs" size calculation
@@ -1019,9 +1019,9 @@ export default {
         dataView.setUint16(offset, players[i].id, true);
         offset += 2;
 
-        // players[keystate], uint8
-        dataView.setUint8(offset, players[i].keystate);
-        offset += 1;
+        // players[keystate], uint16
+        dataView.setUint16(offset, players[i].keystate);
+        offset += 2;
 
         // players[posX], coordx
         dataView.setUint16(offset, players[i].posX * 2 + 32768, true);
@@ -1183,7 +1183,7 @@ export default {
   },
 
   [packet.EVENT_BOUNCE]: (msg: EventBounce): ArrayBuffer => {
-    const buffer = new ArrayBuffer(20);
+    const buffer = new ArrayBuffer(21);
     const dataView = new DataView(buffer);
 
     let offset = 0;
@@ -1199,9 +1199,9 @@ export default {
     dataView.setUint16(offset, msg.id, true);
     offset += 2;
 
-    // keystate, uint8
-    dataView.setUint8(offset, msg.keystate);
-    offset += 1;
+    // keystate, uint16
+    dataView.setUint16(offset, msg.keystate);
+    offset += 2;
 
     // posX, coord24
     {
