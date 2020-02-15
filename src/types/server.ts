@@ -116,8 +116,16 @@ export enum PLAYER_UPGRADE_TYPES {
  * SERVER_PACKETS.SERVER_CUSTOM types.
  */
 export enum SERVER_CUSTOM_TYPES {
-  CTF = 2,
+  /**
+   * Messages for specific game types.
+   */
   BTR = 1,
+  CTF = 2,
+
+  /**
+   * Messages for server/client feature extensions.
+   */
+  SERVER_CONFIG = 128,
 }
 
 /**
