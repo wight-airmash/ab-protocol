@@ -28,6 +28,8 @@ export default {
         ['upgrades', DATA_TYPES.uint8],
       ],
     ],
+    ['botsNamePrefix', DATA_TYPES.text],
+    ['bots', DATA_TYPES.array, [['id', DATA_TYPES.uint16]]],
   ],
 
   [SERVER_PACKETS.BACKUP]: [],
@@ -63,6 +65,7 @@ export default {
     ['rot', DATA_TYPES.rotation],
     ['flag', DATA_TYPES.uint16],
     ['upgrades', DATA_TYPES.uint8],
+    ['isBot', DATA_TYPES.boolean],
   ],
 
   [SERVER_PACKETS.PLAYER_LEAVE]: [['id', DATA_TYPES.uint16]],
