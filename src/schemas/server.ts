@@ -32,7 +32,10 @@ export default {
 
   [SERVER_PACKETS.BACKUP]: [],
 
-  [SERVER_PACKETS.PING]: [['clock', DATA_TYPES.uint32], ['num', DATA_TYPES.uint32]],
+  [SERVER_PACKETS.PING]: [
+    ['clock', DATA_TYPES.uint32],
+    ['num', DATA_TYPES.uint32],
+  ],
 
   [SERVER_PACKETS.PING_RESULT]: [
     ['ping', DATA_TYPES.uint16],
@@ -44,7 +47,10 @@ export default {
 
   [SERVER_PACKETS.ERROR]: [['error', DATA_TYPES.uint8]],
 
-  [SERVER_PACKETS.COMMAND_REPLY]: [['type', DATA_TYPES.uint8], ['text', DATA_TYPES.textbig]],
+  [SERVER_PACKETS.COMMAND_REPLY]: [
+    ['type', DATA_TYPES.uint8],
+    ['text', DATA_TYPES.textbig],
+  ],
 
   [SERVER_PACKETS.PLAYER_NEW]: [
     ['id', DATA_TYPES.uint16],
@@ -105,7 +111,10 @@ export default {
     ['upgrades', DATA_TYPES.uint8],
   ],
 
-  [SERVER_PACKETS.PLAYER_FLAG]: [['id', DATA_TYPES.uint16], ['flag', DATA_TYPES.uint16]],
+  [SERVER_PACKETS.PLAYER_FLAG]: [
+    ['id', DATA_TYPES.uint16],
+    ['flag', DATA_TYPES.uint16],
+  ],
 
   [SERVER_PACKETS.PLAYER_HIT]: [
     ['id', DATA_TYPES.uint16],
@@ -140,9 +149,15 @@ export default {
     ['missile', DATA_TYPES.uint8],
   ],
 
-  [SERVER_PACKETS.PLAYER_TYPE]: [['id', DATA_TYPES.uint16], ['type', DATA_TYPES.uint8]],
+  [SERVER_PACKETS.PLAYER_TYPE]: [
+    ['id', DATA_TYPES.uint16],
+    ['type', DATA_TYPES.uint8],
+  ],
 
-  [SERVER_PACKETS.PLAYER_POWERUP]: [['type', DATA_TYPES.uint8], ['duration', DATA_TYPES.uint32]],
+  [SERVER_PACKETS.PLAYER_POWERUP]: [
+    ['type', DATA_TYPES.uint8],
+    ['duration', DATA_TYPES.uint32],
+  ],
 
   [SERVER_PACKETS.PLAYER_LEVEL]: [
     ['id', DATA_TYPES.uint16],
@@ -151,7 +166,14 @@ export default {
   ],
 
   [SERVER_PACKETS.PLAYER_RETEAM]: [
-    ['players', DATA_TYPES.array, [['id', DATA_TYPES.uint16], ['team', DATA_TYPES.uint16]]],
+    [
+      'players',
+      DATA_TYPES.array,
+      [
+        ['id', DATA_TYPES.uint16],
+        ['team', DATA_TYPES.uint16],
+      ],
+    ],
   ],
 
   [SERVER_PACKETS.GAME_FLAG]: [
@@ -252,7 +274,10 @@ export default {
     ['energyRegen', DATA_TYPES.regen],
   ],
 
-  [SERVER_PACKETS.EVENT_LEAVEHORIZON]: [['type', DATA_TYPES.uint8], ['id', DATA_TYPES.uint16]],
+  [SERVER_PACKETS.EVENT_LEAVEHORIZON]: [
+    ['type', DATA_TYPES.uint8],
+    ['id', DATA_TYPES.uint16],
+  ],
 
   [SERVER_PACKETS.MOB_UPDATE]: [
     ['clock', DATA_TYPES.uint32],
@@ -274,7 +299,10 @@ export default {
     ['posY', DATA_TYPES.float32],
   ],
 
-  [SERVER_PACKETS.MOB_DESPAWN]: [['id', DATA_TYPES.uint16], ['type', DATA_TYPES.uint8]],
+  [SERVER_PACKETS.MOB_DESPAWN]: [
+    ['id', DATA_TYPES.uint16],
+    ['type', DATA_TYPES.uint8],
+  ],
 
   [SERVER_PACKETS.MOB_DESPAWN_COORDS]: [
     ['id', DATA_TYPES.uint16],
@@ -296,12 +324,20 @@ export default {
     [
       'data',
       DATA_TYPES.array,
-      [['id', DATA_TYPES.uint16], ['score', DATA_TYPES.uint32], ['level', DATA_TYPES.uint8]],
+      [
+        ['id', DATA_TYPES.uint16],
+        ['score', DATA_TYPES.uint32],
+        ['level', DATA_TYPES.uint8],
+      ],
     ],
     [
       'rankings',
       DATA_TYPES.array,
-      [['id', DATA_TYPES.uint16], ['x', DATA_TYPES.uint8], ['y', DATA_TYPES.uint8]],
+      [
+        ['id', DATA_TYPES.uint16],
+        ['x', DATA_TYPES.uint8],
+        ['y', DATA_TYPES.uint8],
+      ],
     ],
   ],
 
@@ -356,11 +392,20 @@ export default {
     ],
   ],
 
-  [SERVER_PACKETS.CHAT_TEAM]: [['id', DATA_TYPES.uint16], ['text', DATA_TYPES.text]],
+  [SERVER_PACKETS.CHAT_TEAM]: [
+    ['id', DATA_TYPES.uint16],
+    ['text', DATA_TYPES.text],
+  ],
 
-  [SERVER_PACKETS.CHAT_PUBLIC]: [['id', DATA_TYPES.uint16], ['text', DATA_TYPES.text]],
+  [SERVER_PACKETS.CHAT_PUBLIC]: [
+    ['id', DATA_TYPES.uint16],
+    ['text', DATA_TYPES.text],
+  ],
 
-  [SERVER_PACKETS.CHAT_SAY]: [['id', DATA_TYPES.uint16], ['text', DATA_TYPES.text]],
+  [SERVER_PACKETS.CHAT_SAY]: [
+    ['id', DATA_TYPES.uint16],
+    ['text', DATA_TYPES.text],
+  ],
 
   [SERVER_PACKETS.CHAT_WHISPER]: [
     ['from', DATA_TYPES.uint16],
@@ -378,5 +423,8 @@ export default {
     ['text', DATA_TYPES.textbig],
   ],
 
-  [SERVER_PACKETS.SERVER_CUSTOM]: [['type', DATA_TYPES.uint8], ['data', DATA_TYPES.textbig]],
+  [SERVER_PACKETS.SERVER_CUSTOM]: [
+    ['type', DATA_TYPES.uint8],
+    ['data', DATA_TYPES.textbig],
+  ],
 };

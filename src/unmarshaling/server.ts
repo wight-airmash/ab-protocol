@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /*
  *
  * This file was created automatically with generator

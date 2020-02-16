@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 export class ProtocolError {
   public name: string;
 
@@ -10,4 +11,5 @@ export class ProtocolError {
 }
 
 export class StringEncodeError extends ProtocolError {}
+
 export class StringDecodeError extends ProtocolError {}

@@ -223,6 +223,7 @@ const calcBufferLength = (dataSchema, array = '') => {
 ].forEach(([schemaEntries, packetNames, importName, outputFile]) => {
   source = '';
 
+  codeLn('/* eslint-disable */');
   comment('/*');
   comment('*', 1);
   comment('* This file was created automatically with generator', 1);

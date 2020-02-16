@@ -10,9 +10,9 @@
     "build": "tsc",
     "watch": "tsc -w",
     "dev": "watch",
-    "lint": "eslint . --ext .js,.mjs,.ts",
+    "lint": "eslint ./src --ext .js,.mjs,.ts",
     "prepare": "npm run build",
-    "lint-autofix": "eslint --ext .js,.mjs,.ts --fix",
+    "lint-autofix": "eslint ./src --ext .js,.mjs,.ts --fix",
     "lint-staged": "lint-staged"
   },
   "repository": {

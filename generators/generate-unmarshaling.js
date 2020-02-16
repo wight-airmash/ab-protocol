@@ -91,6 +91,7 @@ Object.entries(DATA_TYPES).forEach(([key, value]) => {
 ].forEach(([schemaEntries, packetNames, importName, outputFile]) => {
   source = '';
 
+  codeLn('/* eslint-disable */');
   comment('/*');
   comment('*', 1);
   comment('* This file was created automatically with generator', 1);

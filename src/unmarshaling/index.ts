@@ -9,8 +9,6 @@ import PREDEFINED_SERVER_MARSHAL from './server';
 const SERVER_BUFFER = 0;
 const CLIENT_BUFFER = 1;
 
-const flushVars = (): void => {};
-
 const readBufferData = (
   dataView: DataView,
   startReadIndex = 0,
@@ -305,8 +303,6 @@ const unmarshal = (
   type: number,
   usePredefinedMarshal: boolean
 ): ProtocolPacket => {
-  flushVars();
-
   const dataView = new DataView(buffer);
   const messageCode = dataView.getUint8(0);
 
