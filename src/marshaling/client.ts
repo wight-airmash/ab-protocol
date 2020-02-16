@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 /*
  *
  * This file was created automatically with generator
@@ -81,7 +79,6 @@ export default {
       dataView.setUint8(offset + charOffset, flag[charOffset]);
     }
 
-
     return buffer;
   },
 
@@ -104,7 +101,6 @@ export default {
     for (let charOffset = 0; charOffset < token.length; charOffset += 1) {
       dataView.setUint8(offset + charOffset, token[charOffset]);
     }
-
 
     return buffer;
   },
@@ -209,7 +205,6 @@ export default {
       dataView.setUint8(offset + charOffset, data[charOffset]);
     }
 
-
     return buffer;
   },
 
@@ -242,7 +237,6 @@ export default {
       dataView.setUint8(offset + charOffset, text[charOffset]);
     }
 
-
     return buffer;
   },
 
@@ -270,7 +264,6 @@ export default {
       dataView.setUint8(offset + charOffset, text[charOffset]);
     }
 
-
     return buffer;
   },
 
@@ -294,7 +287,6 @@ export default {
       dataView.setUint8(offset + charOffset, text[charOffset]);
     }
 
-
     return buffer;
   },
 
@@ -317,7 +309,6 @@ export default {
     for (let charOffset = 0; charOffset < text.length; charOffset += 1) {
       dataView.setUint8(offset + charOffset, text[charOffset]);
     }
-
 
     return buffer;
   },
@@ -352,5 +343,5 @@ export default {
     offset += 4;
 
     return buffer;
-  }
+  },
 };
