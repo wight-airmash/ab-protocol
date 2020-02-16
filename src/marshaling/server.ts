@@ -75,11 +75,17 @@ export default {
       arrStringsOffset += 1;
     }
 
+    // Array "bots" size calculation
+    for (let i = 0; i < msg.bots.length; i += 1) {
+      arraysSize += 2;
+    }
+
     // Root strings size calculation
     const token = encodeUTF8(msg.token);
     const room = encodeUTF8(msg.room);
+    const botsNamePrefix = encodeUTF8(msg.botsNamePrefix);
 
-    const buffer = new ArrayBuffer(15 + token.length + room.length + arraysSize);
+    const buffer = new ArrayBuffer(18 + token.length + room.length + botsNamePrefix.length + arraysSize);
     const dataView = new DataView(buffer);
 
     let offset = 0;
@@ -186,6 +192,31 @@ export default {
         // players[upgrades], uint8
         dataView.setUint8(offset, players[i].upgrades);
         offset += 1;
+
+      }
+    }
+
+    // botsNamePrefix, text
+    dataView.setUint8(offset, botsNamePrefix.length);
+    offset += 1;
+
+    for (let charOffset = 0; charOffset < botsNamePrefix.length; charOffset += 1) {
+      dataView.setUint8(offset + charOffset, botsNamePrefix[charOffset]);
+    }
+
+    offset += botsNamePrefix.length;
+
+    // bots, array
+    {
+      const { bots } = msg;
+
+      dataView.setUint16(offset, bots.length, true);
+      offset += 2;
+
+      for (let i = 0; i < bots.length; i += 1) {
+        // bots[id], uint16
+        dataView.setUint16(offset, bots[i].id, true);
+        offset += 2;
 
       }
     }
@@ -303,7 +334,7 @@ export default {
     // Root strings size calculation
     const name = encodeUTF8(msg.name);
 
-    const buffer = new ArrayBuffer(17 + name.length);
+    const buffer = new ArrayBuffer(18 + name.length);
     const dataView = new DataView(buffer);
 
     let offset = 0;
@@ -355,6 +386,10 @@ export default {
 
     // upgrades, uint8
     dataView.setUint8(offset, msg.upgrades);
+    offset += 1;
+
+    // isBot, boolean
+    dataView.setUint8(offset, msg.isBot === false ? 0 : 1);
     offset += 1;
 
     return buffer;

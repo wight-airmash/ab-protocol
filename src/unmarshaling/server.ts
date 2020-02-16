@@ -183,6 +183,39 @@ export default {
       }
     }
 
+    // botsNamePrefix, text
+    {
+      const stringLength = dataView.getUint8(readIndex);
+      const encodedString = new Uint8Array(stringLength);
+
+      readIndex += 1;
+
+      for (let charIndex = 0; charIndex < stringLength; charIndex += 1) {
+        encodedString[charIndex] = dataView.getUint8(readIndex + charIndex);
+      }
+
+      msg.botsNamePrefix = decodeUTF8(encodedString);
+      readIndex += stringLength;
+    }
+
+    // bots, array
+    {
+      const arrayLength = dataView.getUint16(readIndex, true);
+
+      readIndex += 2;
+      msg.bots = [];
+
+      for (let i = 0; i < arrayLength; i += 1) {
+        const arrayElement: Login['bots'][0] = {};
+
+        // id, uint16
+        arrayElement.id = dataView.getUint16(readIndex, true);
+        readIndex += 2;
+
+        msg.bots.push(arrayElement)
+      }
+    }
+
     return msg;
   },
 
@@ -328,6 +361,10 @@ export default {
 
     // upgrades, uint8
     msg.upgrades = dataView.getUint8(readIndex);
+    readIndex += 1;
+
+    // isBot, boolean
+    msg.isBot = dataView.getUint8(readIndex) !== 0;
     readIndex += 1;
 
     return msg;
