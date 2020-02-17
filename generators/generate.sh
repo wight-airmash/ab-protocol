@@ -1,7 +1,11 @@
 #!/bin/sh
 
 BASEDIR=$(dirname "$0")
+PROJECT_ROOT=$(realpath "$BASEDIR/../")
 cd "$BASEDIR"
+
+echo "Build project..."
+(cd "$PROJECT_ROOT" && exec npm run build)
 
 echo "Generate marshaling..."
 node ./generate-marshaling.js
