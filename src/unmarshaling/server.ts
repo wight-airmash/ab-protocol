@@ -56,6 +56,10 @@ import {
   ServerCustom,
 } from '../types/packets-server';
 
+const staticBackupPacket: Backup = { c: 1 };
+const staticAckPacket: Ack = { c: 7 };
+const staticChatVotemutedPacket: ChatVotemuted = { c: 79 };
+
 export default {
   [packet.LOGIN]: (buffer: ArrayBuffer): Login => {
     const msg: Login = { c: 0 };
@@ -218,9 +222,7 @@ export default {
     return msg;
   },
 
-  [packet.BACKUP]: (): Backup => {
-    return { c: 1 };
-  },
+  [packet.BACKUP]: (): Backup => staticBackupPacket,
 
   [packet.PING]: (buffer: ArrayBuffer): Ping => {
     const msg: Ping = { c: 5 };
@@ -260,9 +262,7 @@ export default {
     return msg;
   },
 
-  [packet.ACK]: (): Ack => {
-    return { c: 7 };
-  },
+  [packet.ACK]: (): Ack => staticAckPacket,
 
   [packet.ERROR]: (buffer: ArrayBuffer): Error => {
     const msg: Error = { c: 8 };
@@ -1423,9 +1423,7 @@ export default {
     return msg;
   },
 
-  [packet.CHAT_VOTEMUTED]: (): ChatVotemuted => {
-    return { c: 79 };
-  },
+  [packet.CHAT_VOTEMUTED]: (): ChatVotemuted => staticChatVotemutedPacket,
 
   [packet.SCORE_UPDATE]: (buffer: ArrayBuffer): ScoreUpdate => {
     const msg: ScoreUpdate = { c: 80 };

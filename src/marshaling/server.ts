@@ -9,10 +9,8 @@ import packet from '../packets/server';
 import { encodeUTF8 } from '../support/utils';
 import {
   Login,
-  Backup,
   Ping,
   PingResult,
-  Ack,
   Error,
   CommandReply,
   PlayerNew,
@@ -46,7 +44,6 @@ import {
   ChatSay,
   ChatWhisper,
   ChatVotemutepassed,
-  ChatVotemuted,
   ScoreUpdate,
   ScoreBoard,
   ScoreDetailed,
@@ -55,6 +52,31 @@ import {
   ServerMessage,
   ServerCustom,
 } from '../types/packets-server';
+
+const staticBackupPacket = ((): ArrayBuffer => {
+  const buffer = new ArrayBuffer(1);
+  const dataView = new DataView(buffer);
+
+  dataView.setUint8(0, 1);
+
+  return buffer;
+})();
+const staticAckPacket = ((): ArrayBuffer => {
+  const buffer = new ArrayBuffer(1);
+  const dataView = new DataView(buffer);
+
+  dataView.setUint8(0, 7);
+
+  return buffer;
+})();
+const staticChatVotemutedPacket = ((): ArrayBuffer => {
+  const buffer = new ArrayBuffer(1);
+  const dataView = new DataView(buffer);
+
+  dataView.setUint8(0, 79);
+
+  return buffer;
+})();
 
 export default {
   [packet.LOGIN]: (msg: Login): ArrayBuffer => {
@@ -227,14 +249,7 @@ export default {
     return buffer;
   },
 
-  [packet.BACKUP]: (msg: Backup): ArrayBuffer => {
-    const buffer = new ArrayBuffer(1);
-    const dataView = new DataView(buffer);
-
-    dataView.setUint8(0, msg.c);
-
-    return buffer;
-  },
+  [packet.BACKUP]: (): ArrayBuffer => staticBackupPacket,
 
   [packet.PING]: (msg: Ping): ArrayBuffer => {
     const buffer = new ArrayBuffer(9);
@@ -280,14 +295,7 @@ export default {
     return buffer;
   },
 
-  [packet.ACK]: (msg: Ack): ArrayBuffer => {
-    const buffer = new ArrayBuffer(1);
-    const dataView = new DataView(buffer);
-
-    dataView.setUint8(0, msg.c);
-
-    return buffer;
-  },
+  [packet.ACK]: (): ArrayBuffer => staticAckPacket,
 
   [packet.ERROR]: (msg: Error): ArrayBuffer => {
     const buffer = new ArrayBuffer(2);
@@ -1582,14 +1590,7 @@ export default {
     return buffer;
   },
 
-  [packet.CHAT_VOTEMUTED]: (msg: ChatVotemuted): ArrayBuffer => {
-    const buffer = new ArrayBuffer(1);
-    const dataView = new DataView(buffer);
-
-    dataView.setUint8(0, msg.c);
-
-    return buffer;
-  },
+  [packet.CHAT_VOTEMUTED]: (): ArrayBuffer => staticChatVotemutedPacket,
 
   [packet.SCORE_UPDATE]: (msg: ScoreUpdate): ArrayBuffer => {
     const buffer = new ArrayBuffer(21);

@@ -11,11 +11,9 @@ import {
   Login,
   Backup,
   Horizon,
-  Ack,
   Pong,
   Key,
   Command,
-  Scoredetailed,
   Chat,
   Whisper,
   Say,
@@ -23,6 +21,23 @@ import {
   Votemute,
   Localping,
 } from '../types/packets-client';
+
+const staticAckPacket = ((): ArrayBuffer => {
+  const buffer = new ArrayBuffer(1);
+  const dataView = new DataView(buffer);
+
+  dataView.setUint8(0, 5);
+
+  return buffer;
+})();
+const staticScoredetailedPacket = ((): ArrayBuffer => {
+  const buffer = new ArrayBuffer(1);
+  const dataView = new DataView(buffer);
+
+  dataView.setUint8(0, 12);
+
+  return buffer;
+})();
 
 export default {
   [packet.LOGIN]: (msg: Login): ArrayBuffer => {
@@ -125,14 +140,7 @@ export default {
     return buffer;
   },
 
-  [packet.ACK]: (msg: Ack): ArrayBuffer => {
-    const buffer = new ArrayBuffer(1);
-    const dataView = new DataView(buffer);
-
-    dataView.setUint8(0, msg.c);
-
-    return buffer;
-  },
+  [packet.ACK]: (): ArrayBuffer => staticAckPacket,
 
   [packet.PONG]: (msg: Pong): ArrayBuffer => {
     const buffer = new ArrayBuffer(5);
@@ -208,14 +216,7 @@ export default {
     return buffer;
   },
 
-  [packet.SCOREDETAILED]: (msg: Scoredetailed): ArrayBuffer => {
-    const buffer = new ArrayBuffer(1);
-    const dataView = new DataView(buffer);
-
-    dataView.setUint8(0, msg.c);
-
-    return buffer;
-  },
+  [packet.SCOREDETAILED]: (): ArrayBuffer => staticScoredetailedPacket,
 
   [packet.CHAT]: (msg: Chat): ArrayBuffer => {
     // Root strings size calculation
