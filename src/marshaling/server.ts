@@ -103,10 +103,10 @@ export default {
     // Root strings size calculation
     const token = encodeUTF8(msg.token);
     const room = encodeUTF8(msg.room);
-    const botsNamePrefix = encodeUTF8(msg.botsNamePrefix);
+    const serverConfiguration = encodeUTF8(msg.serverConfiguration);
 
     const buffer = new ArrayBuffer(
-      18 + token.length + room.length + botsNamePrefix.length + arraysSize
+      19 + token.length + room.length + serverConfiguration.length + arraysSize
     );
     const dataView = new DataView(buffer);
 
@@ -222,15 +222,15 @@ export default {
       }
     }
 
-    // botsNamePrefix, text
-    dataView.setUint8(offset, botsNamePrefix.length);
-    offset += 1;
+    // serverConfiguration, textbig
+    dataView.setUint16(offset, serverConfiguration.length, true);
+    offset += 2;
 
-    for (let charOffset = 0; charOffset < botsNamePrefix.length; charOffset += 1) {
-      dataView.setUint8(offset + charOffset, botsNamePrefix[charOffset]);
+    for (let charOffset = 0; charOffset < serverConfiguration.length; charOffset += 1) {
+      dataView.setUint8(offset + charOffset, serverConfiguration[charOffset]);
     }
 
-    offset += botsNamePrefix.length;
+    offset += serverConfiguration.length;
 
     // bots, array
     {

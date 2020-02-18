@@ -129,9 +129,9 @@ export interface Login extends ProtocolPacket {
   players?: LoginPlayer[];
 
   /**
-   * Bots name prefix.
+   * Server configuration.
    */
-  botsNamePrefix?: string;
+  serverConfiguration?: string;
 
   /**
    * List of bots ID.

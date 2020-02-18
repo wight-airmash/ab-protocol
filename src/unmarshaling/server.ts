@@ -186,18 +186,18 @@ export default {
       }
     }
 
-    // botsNamePrefix, text
+    // serverConfiguration, textbig
     {
-      const stringLength = dataView.getUint8(readIndex);
+      const stringLength = dataView.getUint16(readIndex, true);
       const encodedString = new Uint8Array(stringLength);
 
-      readIndex += 1;
+      readIndex += 2;
 
       for (let charIndex = 0; charIndex < stringLength; charIndex += 1) {
         encodedString[charIndex] = dataView.getUint8(readIndex + charIndex);
       }
 
-      msg.botsNamePrefix = decodeUTF8(encodedString);
+      msg.serverConfiguration = decodeUTF8(encodedString);
       readIndex += stringLength;
     }
 
