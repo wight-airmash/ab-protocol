@@ -28,7 +28,7 @@ export default {
         ['upgrades', DATA_TYPES.uint8],
       ],
     ],
-    ['botsNamePrefix', DATA_TYPES.text],
+    ['serverConfiguration', DATA_TYPES.textbig],
     ['bots', DATA_TYPES.array, [['id', DATA_TYPES.uint16]]],
   ],
 
