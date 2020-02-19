@@ -11,11 +11,9 @@ import {
   Login,
   Backup,
   Horizon,
-  Ack,
   Pong,
   Key,
   Command,
-  Scoredetailed,
   Chat,
   Whisper,
   Say,
@@ -23,6 +21,23 @@ import {
   Votemute,
   Localping,
 } from '../types/packets-client';
+
+const staticAckPacket = ((): ArrayBuffer => {
+  const buffer = new ArrayBuffer(1);
+  const dataView = new DataView(buffer);
+
+  dataView.setUint8(0, 5);
+
+  return buffer;
+})();
+const staticScoredetailedPacket = ((): ArrayBuffer => {
+  const buffer = new ArrayBuffer(1);
+  const dataView = new DataView(buffer);
+
+  dataView.setUint8(0, 12);
+
+  return buffer;
+})();
 
 export default {
   [packet.LOGIN]: (msg: Login): ArrayBuffer => {
@@ -79,7 +94,6 @@ export default {
       dataView.setUint8(offset + charOffset, flag[charOffset]);
     }
 
-
     return buffer;
   },
 
@@ -102,7 +116,6 @@ export default {
     for (let charOffset = 0; charOffset < token.length; charOffset += 1) {
       dataView.setUint8(offset + charOffset, token[charOffset]);
     }
-
 
     return buffer;
   },
@@ -127,14 +140,7 @@ export default {
     return buffer;
   },
 
-  [packet.ACK]: (msg: Ack): ArrayBuffer => {
-    const buffer = new ArrayBuffer(1);
-    const dataView = new DataView(buffer);
-
-    dataView.setUint8(0, msg.c);
-
-    return buffer;
-  },
+  [packet.ACK]: (): ArrayBuffer => staticAckPacket,
 
   [packet.PONG]: (msg: Pong): ArrayBuffer => {
     const buffer = new ArrayBuffer(5);
@@ -207,18 +213,10 @@ export default {
       dataView.setUint8(offset + charOffset, data[charOffset]);
     }
 
-
     return buffer;
   },
 
-  [packet.SCOREDETAILED]: (msg: Scoredetailed): ArrayBuffer => {
-    const buffer = new ArrayBuffer(1);
-    const dataView = new DataView(buffer);
-
-    dataView.setUint8(0, msg.c);
-
-    return buffer;
-  },
+  [packet.SCOREDETAILED]: (): ArrayBuffer => staticScoredetailedPacket,
 
   [packet.CHAT]: (msg: Chat): ArrayBuffer => {
     // Root strings size calculation
@@ -239,7 +237,6 @@ export default {
     for (let charOffset = 0; charOffset < text.length; charOffset += 1) {
       dataView.setUint8(offset + charOffset, text[charOffset]);
     }
-
 
     return buffer;
   },
@@ -268,7 +265,6 @@ export default {
       dataView.setUint8(offset + charOffset, text[charOffset]);
     }
 
-
     return buffer;
   },
 
@@ -292,7 +288,6 @@ export default {
       dataView.setUint8(offset + charOffset, text[charOffset]);
     }
 
-
     return buffer;
   },
 
@@ -315,7 +310,6 @@ export default {
     for (let charOffset = 0; charOffset < text.length; charOffset += 1) {
       dataView.setUint8(offset + charOffset, text[charOffset]);
     }
-
 
     return buffer;
   },
@@ -350,5 +344,5 @@ export default {
     offset += 4;
 
     return buffer;
-  }
+  },
 };

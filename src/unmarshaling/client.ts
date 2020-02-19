@@ -24,6 +24,9 @@ import {
   Localping,
 } from '../types/packets-client';
 
+const staticAckPacket: Ack = { c: 5 };
+const staticScoredetailedPacket: Scoredetailed = { c: 12 };
+
 export default {
   [packet.LOGIN]: (buffer: ArrayBuffer): Login => {
     const msg: Login = { c: 0 };
@@ -132,9 +135,7 @@ export default {
     return msg;
   },
 
-  [packet.ACK]: (): Ack => {
-    return { c: 5 };
-  },
+  [packet.ACK]: (): Ack => staticAckPacket,
 
   [packet.PONG]: (buffer: ArrayBuffer): Pong => {
     const msg: Pong = { c: 6 };
@@ -209,9 +210,7 @@ export default {
     return msg;
   },
 
-  [packet.SCOREDETAILED]: (): Scoredetailed => {
-    return { c: 12 };
-  },
+  [packet.SCOREDETAILED]: (): Scoredetailed => staticScoredetailedPacket,
 
   [packet.CHAT]: (buffer: ArrayBuffer): Chat => {
     const msg: Chat = { c: 20 };
@@ -337,5 +336,5 @@ export default {
     readIndex += 4;
 
     return msg;
-  }
+  },
 };

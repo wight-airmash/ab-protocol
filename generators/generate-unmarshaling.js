@@ -89,6 +89,9 @@ Object.entries(DATA_TYPES).forEach(([key, value]) => {
   [Object.entries(client), clientPacketNames, 'client', '../src/unmarshaling/client.ts'],
   [Object.entries(server), serverPacketNames, 'server', '../src/unmarshaling/server.ts'],
 ].forEach(([schemaEntries, packetNames, importName, outputFile]) => {
+  const staticPacketsPlaceholder = '%static-packets%';
+  let staticPackets = [];
+
   source = '';
 
   comment('/*');
@@ -111,6 +114,8 @@ Object.entries(DATA_TYPES).forEach(([key, value]) => {
     codeLn("} from '../types/packets-server';");
   }
 
+  commentLn(staticPacketsPlaceholder);
+
   code('export default {');
 
   schemaEntries.forEach(([key, schema], schemaEntryIndex) => {
@@ -120,8 +125,14 @@ Object.entries(DATA_TYPES).forEach(([key, value]) => {
 
     if (schema.length === 0) {
       // Empty message
-      code(`[packet.${packetNames[key]}]: (): ${toPascalCase(packetNames[key])} => {`, 2);
-      code(`return { c: ${key} };`, 4);
+
+      const constName = `static${toPascalCase(packetNames[key])}Packet`;
+
+      staticPackets.push(`const ${constName}: ${toPascalCase(packetNames[key])} = { c: ${key} };`);
+
+      codeLn(`[packet.${packetNames[key]}]: (): ${toPascalCase(packetNames[key])} => ${constName},`, 2);
+
+      return;
     } else {
       code(
         `[packet.${packetNames[key]}]: (buffer: ArrayBuffer): ${toPascalCase(
@@ -421,6 +432,8 @@ Object.entries(DATA_TYPES).forEach(([key, value]) => {
   });
 
   code('};');
+
+  source = source.replace(`// ${staticPacketsPlaceholder}`, staticPackets.join("\n"));
 
   fs.writeFileSync(outputFile, source);
 });

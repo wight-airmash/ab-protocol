@@ -56,6 +56,10 @@ import {
   ServerCustom,
 } from '../types/packets-server';
 
+const staticBackupPacket: Backup = { c: 1 };
+const staticAckPacket: Ack = { c: 7 };
+const staticChatVotemutedPacket: ChatVotemuted = { c: 79 };
+
 export default {
   [packet.LOGIN]: (buffer: ArrayBuffer): Login => {
     const msg: Login = { c: 0 };
@@ -141,6 +145,7 @@ export default {
           const encodedString = new Uint8Array(stringLength);
 
           readIndex += 1;
+
           for (let charIndex = 0; charIndex < stringLength; charIndex += 1) {
             encodedString[charIndex] = dataView.getUint8(readIndex + charIndex);
           }
@@ -177,16 +182,14 @@ export default {
         arrayElement.upgrades = dataView.getUint8(readIndex);
         readIndex += 1;
 
-        msg.players.push(arrayElement)
+        msg.players.push(arrayElement);
       }
     }
 
     return msg;
   },
 
-  [packet.BACKUP]: (): Backup => {
-    return { c: 1 };
-  },
+  [packet.BACKUP]: (): Backup => staticBackupPacket,
 
   [packet.PING]: (buffer: ArrayBuffer): Ping => {
     const msg: Ping = { c: 5 };
@@ -226,9 +229,7 @@ export default {
     return msg;
   },
 
-  [packet.ACK]: (): Ack => {
-    return { c: 7 };
-  },
+  [packet.ACK]: (): Ack => staticAckPacket,
 
   [packet.ERROR]: (buffer: ArrayBuffer): Error => {
     const msg: Error = { c: 8 };
@@ -467,7 +468,7 @@ export default {
         arrayElement.maxSpeed = (dataView.getUint16(readIndex, true) - 32768) / 1638.4;
         readIndex += 2;
 
-        msg.projectiles.push(arrayElement)
+        msg.projectiles.push(arrayElement);
       }
     }
 
@@ -522,7 +523,7 @@ export default {
         arrayElement.healthRegen = (dataView.getUint16(readIndex, true) - 32768) / 1e6;
         readIndex += 2;
 
-        msg.players.push(arrayElement)
+        msg.players.push(arrayElement);
       }
     }
 
@@ -722,7 +723,7 @@ export default {
         arrayElement.team = dataView.getUint16(readIndex, true);
         readIndex += 2;
 
-        msg.players.push(arrayElement)
+        msg.players.push(arrayElement);
       }
     }
 
@@ -931,7 +932,7 @@ export default {
         arrayElement.playerHealthRegen = (dataView.getUint16(readIndex, true) - 32768) / 1e6;
         readIndex += 2;
 
-        msg.players.push(arrayElement)
+        msg.players.push(arrayElement);
       }
     }
 
@@ -981,7 +982,7 @@ export default {
         arrayElement.maxSpeed = (dataView.getUint16(readIndex, true) - 32768) / 1638.4;
         readIndex += 2;
 
-        msg.mobs.push(arrayElement)
+        msg.mobs.push(arrayElement);
       }
     }
 
@@ -1385,9 +1386,7 @@ export default {
     return msg;
   },
 
-  [packet.CHAT_VOTEMUTED]: (): ChatVotemuted => {
-    return { c: 79 };
-  },
+  [packet.CHAT_VOTEMUTED]: (): ChatVotemuted => staticChatVotemutedPacket,
 
   [packet.SCORE_UPDATE]: (buffer: ArrayBuffer): ScoreUpdate => {
     const msg: ScoreUpdate = { c: 80 };
@@ -1450,7 +1449,7 @@ export default {
         arrayElement.level = dataView.getUint8(readIndex);
         readIndex += 1;
 
-        msg.data.push(arrayElement)
+        msg.data.push(arrayElement);
       }
     }
 
@@ -1476,7 +1475,7 @@ export default {
         arrayElement.y = dataView.getUint8(readIndex);
         readIndex += 1;
 
-        msg.rankings.push(arrayElement)
+        msg.rankings.push(arrayElement);
       }
     }
 
@@ -1527,7 +1526,7 @@ export default {
         arrayElement.ping = dataView.getUint16(readIndex, true);
         readIndex += 2;
 
-        msg.scores.push(arrayElement)
+        msg.scores.push(arrayElement);
       }
     }
 
@@ -1582,7 +1581,7 @@ export default {
         arrayElement.ping = dataView.getUint16(readIndex, true);
         readIndex += 2;
 
-        msg.scores.push(arrayElement)
+        msg.scores.push(arrayElement);
       }
     }
 
@@ -1641,7 +1640,7 @@ export default {
         arrayElement.ping = dataView.getUint16(readIndex, true);
         readIndex += 2;
 
-        msg.scores.push(arrayElement)
+        msg.scores.push(arrayElement);
       }
     }
 
@@ -1706,5 +1705,5 @@ export default {
     }
 
     return msg;
-  }
+  },
 };

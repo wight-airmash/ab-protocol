@@ -10,9 +10,9 @@
     "build": "tsc",
     "watch": "tsc -w",
     "dev": "watch",
-    "lint": "eslint . --ext .js,.mjs,.ts",
+    "lint": "eslint ./src --ext .js,.mjs,.ts",
     "prepare": "npm run build",
-    "lint-autofix": "eslint --ext .js,.mjs,.ts --fix",
+    "lint-autofix": "eslint ./src --ext .js,.mjs,.ts --fix",
     "lint-staged": "lint-staged"
   },
   "repository": {
@@ -38,19 +38,19 @@
   "pre-commit": "lint-staged",
   "dependencies": {},
   "devDependencies": {
-    "@types/node": "^12.12.17",
-    "@typescript-eslint/eslint-plugin": "^2.11.0",
-    "@typescript-eslint/parser": "^2.11.0",
-    "eslint": "^6.7.2",
+    "@types/node": "^12.12.27",
+    "@typescript-eslint/eslint-plugin": "^2.20.0",
+    "@typescript-eslint/parser": "^2.20.0",
+    "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-config-prettier": "^6.7.0",
-    "eslint-plugin-import": "^2.19.1",
-    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-prettier": "^3.1.2",
     "lint-staged": "^9.5.0",
     "pre-commit": "^1.2.2",
     "prettier": "^1.19.1",
-    "typescript": "^3.7.3"
+    "typescript": "^3.7.5"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
@@ -90,6 +90,14 @@
       }
     },
     "rules": {
+      "import/extensions": [
+        "error",
+        "ignorePackages",
+        {
+          "js": "never",
+          "ts": "never"
+        }
+      ],
       "@typescript-eslint/explicit-function-return-type": [
         "warn",
         {

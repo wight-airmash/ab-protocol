@@ -221,6 +221,9 @@ const calcBufferLength = (dataSchema, array = '') => {
   [Object.entries(client), clientPacketNames, 'client', '../src/marshaling/client.ts'],
   [Object.entries(server), serverPacketNames, 'server', '../src/marshaling/server.ts'],
 ].forEach(([schemaEntries, packetNames, importName, outputFile]) => {
+  const staticPacketsPlaceholder = '%static-packets%';
+  let staticPackets = [];
+
   source = '';
 
   comment('/*');
@@ -233,8 +236,13 @@ const calcBufferLength = (dataSchema, array = '') => {
   code("import { encodeUTF8 } from '../support/utils';");
   code('import {');
 
-  Object.values(packetNames).forEach(packetName => {
-    code(`${toPascalCase(packetName)},`, 2);
+  Object.entries(packetNames).forEach(([packetKey, packetName]) => {
+    const schemaIndex = schemaEntries.findIndex(([schemaKey]) => schemaKey === packetKey);
+    const [, schema] = schemaEntries[schemaIndex];
+
+    if (schema.length !== 0) {
+      code(`${toPascalCase(packetName)},`, 2);
+    }
   });
 
   if (importName === 'client') {
@@ -242,6 +250,8 @@ const calcBufferLength = (dataSchema, array = '') => {
   } else {
     codeLn("} from '../types/packets-server';");
   }
+
+  commentLn(staticPacketsPlaceholder);
 
   code('export default {');
 
@@ -254,18 +264,32 @@ const calcBufferLength = (dataSchema, array = '') => {
       return;
     }
 
-    code(
-      `[packet.${packetNames[key]}]: (msg: ${toPascalCase(packetNames[key])}): ArrayBuffer => {`,
-      2
-    );
-
     if (schema.length === 0) {
       // Empty message
-      code('const buffer = new ArrayBuffer(1);', 4);
-      codeLn('const dataView = new DataView(buffer);', 4);
-      codeLn('dataView.setUint8(0, msg.c);', 4);
-      code('return buffer;', 4);
+
+      const constName = `static${toPascalCase(packetNames[key])}Packet`;
+
+      staticPackets.push([
+        `const ${constName} = ((): ArrayBuffer => {`,
+        'const buffer = new ArrayBuffer(1);',
+        'const dataView = new DataView(buffer);',
+        `dataView.setUint8(0, ${key});`,
+        'return buffer;',
+        '})();'
+      ].join("\n"));
+
+      codeLn(
+        `[packet.${packetNames[key]}]: (): ArrayBuffer => ${constName},`,
+        2
+      );
+
+      return;
     } else {
+      code(
+        `[packet.${packetNames[key]}]: (msg: ${toPascalCase(packetNames[key])}): ArrayBuffer => {`,
+        2
+      );
+
       const len = calcBufferLength(schema) + 1;
       const hasArraysStrings = arrays.some(element => element.strings.length > 0);
 
@@ -476,6 +500,8 @@ const calcBufferLength = (dataSchema, array = '') => {
   });
 
   code('};');
+
+  source = source.replace(`// ${staticPacketsPlaceholder}`, staticPackets.join("\n"));
 
   fs.writeFileSync(outputFile, source);
 });

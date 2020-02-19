@@ -24,7 +24,9 @@ export const decodeMinimapCoords = (x: number, y: number): { x: number; y: numbe
   };
 };
 
-export const decodeUpgrades = (upgrades: number): {speed: number, shield: number, inferno: number} => {
+export const decodeUpgrades = (
+  upgrades: number
+): { speed: number; shield: number; inferno: number } => {
   const speed = upgrades & 7;
   const shield = (upgrades & 8) >> 3;
   const inferno = (upgrades & 16) >> 4;
@@ -32,7 +34,7 @@ export const decodeUpgrades = (upgrades: number): {speed: number, shield: number
   return {
     speed,
     shield,
-    inferno
+    inferno,
   };
 };
 

@@ -9,10 +9,8 @@ import packet from '../packets/server';
 import { encodeUTF8 } from '../support/utils';
 import {
   Login,
-  Backup,
   Ping,
   PingResult,
-  Ack,
   Error,
   CommandReply,
   PlayerNew,
@@ -46,7 +44,6 @@ import {
   ChatSay,
   ChatWhisper,
   ChatVotemutepassed,
-  ChatVotemuted,
   ScoreUpdate,
   ScoreBoard,
   ScoreDetailed,
@@ -55,6 +52,31 @@ import {
   ServerMessage,
   ServerCustom,
 } from '../types/packets-server';
+
+const staticBackupPacket = ((): ArrayBuffer => {
+  const buffer = new ArrayBuffer(1);
+  const dataView = new DataView(buffer);
+
+  dataView.setUint8(0, 1);
+
+  return buffer;
+})();
+const staticAckPacket = ((): ArrayBuffer => {
+  const buffer = new ArrayBuffer(1);
+  const dataView = new DataView(buffer);
+
+  dataView.setUint8(0, 7);
+
+  return buffer;
+})();
+const staticChatVotemutedPacket = ((): ArrayBuffer => {
+  const buffer = new ArrayBuffer(1);
+  const dataView = new DataView(buffer);
+
+  dataView.setUint8(0, 79);
+
+  return buffer;
+})();
 
 export default {
   [packet.LOGIN]: (msg: Login): ArrayBuffer => {
@@ -151,9 +173,14 @@ export default {
         dataView.setUint8(offset, arrStrings[arrStringsOffset].length);
         offset += 1;
 
-        for (let charOffset = 0; charOffset < arrStrings[arrStringsOffset].length; charOffset += 1) {
+        for (
+          let charOffset = 0;
+          charOffset < arrStrings[arrStringsOffset].length;
+          charOffset += 1
+        ) {
           dataView.setUint8(offset + charOffset, arrStrings[arrStringsOffset][charOffset]);
         }
+
         offset += arrStrings[arrStringsOffset].length;
         arrStringsOffset += 1;
 
@@ -184,21 +211,13 @@ export default {
         // players[upgrades], uint8
         dataView.setUint8(offset, players[i].upgrades);
         offset += 1;
-
       }
     }
 
     return buffer;
   },
 
-  [packet.BACKUP]: (msg: Backup): ArrayBuffer => {
-    const buffer = new ArrayBuffer(1);
-    const dataView = new DataView(buffer);
-
-    dataView.setUint8(0, msg.c);
-
-    return buffer;
-  },
+  [packet.BACKUP]: (): ArrayBuffer => staticBackupPacket,
 
   [packet.PING]: (msg: Ping): ArrayBuffer => {
     const buffer = new ArrayBuffer(9);
@@ -244,14 +263,7 @@ export default {
     return buffer;
   },
 
-  [packet.ACK]: (msg: Ack): ArrayBuffer => {
-    const buffer = new ArrayBuffer(1);
-    const dataView = new DataView(buffer);
-
-    dataView.setUint8(0, msg.c);
-
-    return buffer;
-  },
+  [packet.ACK]: (): ArrayBuffer => staticAckPacket,
 
   [packet.ERROR]: (msg: Error): ArrayBuffer => {
     const buffer = new ArrayBuffer(2);
@@ -292,7 +304,6 @@ export default {
     for (let charOffset = 0; charOffset < text.length; charOffset += 1) {
       dataView.setUint8(offset + charOffset, text[charOffset]);
     }
-
 
     return buffer;
   },
@@ -401,27 +412,27 @@ export default {
 
     // posX, coord24
     {
-        const value = msg.posX * 512 + 8388608;
-        const u8 = value % 256;
-        const u16 = (value - u8) / 256;
+      const value = msg.posX * 512 + 8388608;
+      const u8 = value % 256;
+      const u16 = (value - u8) / 256;
 
-        dataView.setUint16(offset, u16, true);
-        offset += 2;
+      dataView.setUint16(offset, u16, true);
+      offset += 2;
 
-        dataView.setUint8(offset, u8)
+      dataView.setUint8(offset, u8);
       offset += 1;
     }
 
     // posY, coord24
     {
-        const value = msg.posY * 512 + 8388608;
-        const u8 = value % 256;
-        const u16 = (value - u8) / 256;
+      const value = msg.posY * 512 + 8388608;
+      const u8 = value % 256;
+      const u16 = (value - u8) / 256;
 
-        dataView.setUint16(offset, u16, true);
-        offset += 2;
+      dataView.setUint16(offset, u16, true);
+      offset += 2;
 
-        dataView.setUint8(offset, u8)
+      dataView.setUint8(offset, u8);
       offset += 1;
     }
 
@@ -516,7 +527,6 @@ export default {
         // projectiles[maxSpeed], speed
         dataView.setUint16(offset, projectiles[i].maxSpeed * 1638.4 + 32768, true);
         offset += 2;
-
       }
     }
 
@@ -579,7 +589,6 @@ export default {
         // players[healthRegen], regen
         dataView.setUint16(offset, players[i].healthRegen * 1e6 + 32768, true);
         offset += 2;
-
       }
     }
 
@@ -601,27 +610,27 @@ export default {
 
     // posX, coord24
     {
-        const value = msg.posX * 512 + 8388608;
-        const u8 = value % 256;
-        const u16 = (value - u8) / 256;
+      const value = msg.posX * 512 + 8388608;
+      const u8 = value % 256;
+      const u16 = (value - u8) / 256;
 
-        dataView.setUint16(offset, u16, true);
-        offset += 2;
+      dataView.setUint16(offset, u16, true);
+      offset += 2;
 
-        dataView.setUint8(offset, u8)
+      dataView.setUint8(offset, u8);
       offset += 1;
     }
 
     // posY, coord24
     {
-        const value = msg.posY * 512 + 8388608;
-        const u8 = value % 256;
-        const u16 = (value - u8) / 256;
+      const value = msg.posY * 512 + 8388608;
+      const u8 = value % 256;
+      const u16 = (value - u8) / 256;
 
-        dataView.setUint16(offset, u16, true);
-        offset += 2;
+      dataView.setUint16(offset, u16, true);
+      offset += 2;
 
-        dataView.setUint8(offset, u8)
+      dataView.setUint8(offset, u8);
       offset += 1;
     }
 
@@ -816,7 +825,6 @@ export default {
         // players[team], uint16
         dataView.setUint16(offset, players[i].team, true);
         offset += 2;
-
       }
     }
 
@@ -846,27 +854,27 @@ export default {
 
     // posX, coord24
     {
-        const value = msg.posX * 512 + 8388608;
-        const u8 = value % 256;
-        const u16 = (value - u8) / 256;
+      const value = msg.posX * 512 + 8388608;
+      const u8 = value % 256;
+      const u16 = (value - u8) / 256;
 
-        dataView.setUint16(offset, u16, true);
-        offset += 2;
+      dataView.setUint16(offset, u16, true);
+      offset += 2;
 
-        dataView.setUint8(offset, u8)
+      dataView.setUint8(offset, u8);
       offset += 1;
     }
 
     // posY, coord24
     {
-        const value = msg.posY * 512 + 8388608;
-        const u8 = value % 256;
-        const u16 = (value - u8) / 256;
+      const value = msg.posY * 512 + 8388608;
+      const u8 = value % 256;
+      const u16 = (value - u8) / 256;
 
-        dataView.setUint16(offset, u16, true);
-        offset += 2;
+      dataView.setUint16(offset, u16, true);
+      offset += 2;
 
-        dataView.setUint8(offset, u8)
+      dataView.setUint8(offset, u8);
       offset += 1;
     }
 
@@ -1058,7 +1066,6 @@ export default {
         // players[playerHealthRegen], regen
         dataView.setUint16(offset, players[i].playerHealthRegen * 1e6 + 32768, true);
         offset += 2;
-
       }
     }
 
@@ -1105,7 +1112,6 @@ export default {
         // mobs[maxSpeed], speed
         dataView.setUint16(offset, mobs[i].maxSpeed * 1638.4 + 32768, true);
         offset += 2;
-
       }
     }
 
@@ -1135,27 +1141,27 @@ export default {
 
     // posX, coord24
     {
-        const value = msg.posX * 512 + 8388608;
-        const u8 = value % 256;
-        const u16 = (value - u8) / 256;
+      const value = msg.posX * 512 + 8388608;
+      const u8 = value % 256;
+      const u16 = (value - u8) / 256;
 
-        dataView.setUint16(offset, u16, true);
-        offset += 2;
+      dataView.setUint16(offset, u16, true);
+      offset += 2;
 
-        dataView.setUint8(offset, u8)
+      dataView.setUint8(offset, u8);
       offset += 1;
     }
 
     // posY, coord24
     {
-        const value = msg.posY * 512 + 8388608;
-        const u8 = value % 256;
-        const u16 = (value - u8) / 256;
+      const value = msg.posY * 512 + 8388608;
+      const u8 = value % 256;
+      const u16 = (value - u8) / 256;
 
-        dataView.setUint16(offset, u16, true);
-        offset += 2;
+      dataView.setUint16(offset, u16, true);
+      offset += 2;
 
-        dataView.setUint8(offset, u8)
+      dataView.setUint8(offset, u8);
       offset += 1;
     }
 
@@ -1205,27 +1211,27 @@ export default {
 
     // posX, coord24
     {
-        const value = msg.posX * 512 + 8388608;
-        const u8 = value % 256;
-        const u16 = (value - u8) / 256;
+      const value = msg.posX * 512 + 8388608;
+      const u8 = value % 256;
+      const u16 = (value - u8) / 256;
 
-        dataView.setUint16(offset, u16, true);
-        offset += 2;
+      dataView.setUint16(offset, u16, true);
+      offset += 2;
 
-        dataView.setUint8(offset, u8)
+      dataView.setUint8(offset, u8);
       offset += 1;
     }
 
     // posY, coord24
     {
-        const value = msg.posY * 512 + 8388608;
-        const u8 = value % 256;
-        const u16 = (value - u8) / 256;
+      const value = msg.posY * 512 + 8388608;
+      const u8 = value % 256;
+      const u16 = (value - u8) / 256;
 
-        dataView.setUint16(offset, u16, true);
-        offset += 2;
+      dataView.setUint16(offset, u16, true);
+      offset += 2;
 
-        dataView.setUint8(offset, u8)
+      dataView.setUint8(offset, u8);
       offset += 1;
     }
 
@@ -1444,7 +1450,6 @@ export default {
       dataView.setUint8(offset + charOffset, text[charOffset]);
     }
 
-
     return buffer;
   },
 
@@ -1472,7 +1477,6 @@ export default {
       dataView.setUint8(offset + charOffset, text[charOffset]);
     }
 
-
     return buffer;
   },
 
@@ -1499,7 +1503,6 @@ export default {
     for (let charOffset = 0; charOffset < text.length; charOffset += 1) {
       dataView.setUint8(offset + charOffset, text[charOffset]);
     }
-
 
     return buffer;
   },
@@ -1532,7 +1535,6 @@ export default {
       dataView.setUint8(offset + charOffset, text[charOffset]);
     }
 
-
     return buffer;
   },
 
@@ -1552,14 +1554,7 @@ export default {
     return buffer;
   },
 
-  [packet.CHAT_VOTEMUTED]: (msg: ChatVotemuted): ArrayBuffer => {
-    const buffer = new ArrayBuffer(1);
-    const dataView = new DataView(buffer);
-
-    dataView.setUint8(0, msg.c);
-
-    return buffer;
-  },
+  [packet.CHAT_VOTEMUTED]: (): ArrayBuffer => staticChatVotemutedPacket,
 
   [packet.SCORE_UPDATE]: (msg: ScoreUpdate): ArrayBuffer => {
     const buffer = new ArrayBuffer(21);
@@ -1638,7 +1633,6 @@ export default {
         // data[level], uint8
         dataView.setUint8(offset, data[i].level);
         offset += 1;
-
       }
     }
 
@@ -1661,7 +1655,6 @@ export default {
         // rankings[y], uint8
         dataView.setUint8(offset, rankings[i].y);
         offset += 1;
-
       }
     }
 
@@ -1720,7 +1713,6 @@ export default {
         // scores[ping], uint16
         dataView.setUint16(offset, scores[i].ping, true);
         offset += 2;
-
       }
     }
 
@@ -1783,7 +1775,6 @@ export default {
         // scores[ping], uint16
         dataView.setUint16(offset, scores[i].ping, true);
         offset += 2;
-
       }
     }
 
@@ -1850,7 +1841,6 @@ export default {
         // scores[ping], uint16
         dataView.setUint16(offset, scores[i].ping, true);
         offset += 2;
-
       }
     }
 
@@ -1885,7 +1875,6 @@ export default {
       dataView.setUint8(offset + charOffset, text[charOffset]);
     }
 
-
     return buffer;
   },
 
@@ -1913,7 +1902,6 @@ export default {
       dataView.setUint8(offset + charOffset, data[charOffset]);
     }
 
-
     return buffer;
-  }
+  },
 };

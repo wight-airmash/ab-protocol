@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 export class ProtocolError {
   public name: string;
 
