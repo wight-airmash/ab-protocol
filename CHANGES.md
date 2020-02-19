@@ -9,7 +9,7 @@ Features:
 - New fields `serverConfiguration` and `bots` for server packets `LOGIN`.
 - New field `isBot` for server packets `PLAYER_NEW`.
 
-## 5.11.2 (February 19, 2020)
+## 5.12.0 (February 19, 2020)
 
 Improvements:
 

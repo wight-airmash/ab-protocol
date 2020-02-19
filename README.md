@@ -4,7 +4,7 @@ This library contains the constants, types and utilities needed to implement the
 
 ## Installation
 
-There are two versions: vanilla and the latest. Vanilla version is a full-featured version with no changes or additions. The latest version is an extended version of the protocol, it is still compatible with the known clients of the game, but contains additions.
+There are two versions: vanilla and the latest. Vanilla version is a full-featured version with no custom changes. The latest version is an extended version of the protocol, it is still compatible with the known clients of the game, but contains additions.
 
 `npm install wight-airmash/ab-protocol#vanilla` to install stable vanilla version.
 `npm install wight-airmash/ab-protocol#master` to install the latest stable or specify the version from tags.
