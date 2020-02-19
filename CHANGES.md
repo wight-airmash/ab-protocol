@@ -1,6 +1,6 @@
 ## Future version (unversioned)
 
-## 5.11.2 (February 19, 2020)
+## 5.12.0 (February 19, 2020)
 
 Improvements:
 
