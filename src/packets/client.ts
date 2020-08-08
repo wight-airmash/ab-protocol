@@ -12,5 +12,10 @@ export default {
   SAY: 22,
   TEAMCHAT: 23,
   VOTEMUTE: 24,
+  SYNC_START: 200,
+  SYNC_AUTH: 201,
+  SYNC_INIT: 202,
+  SYNC_UPDATE: 204,
+  SYNC_ACK: 205,
   LOCALPING: 255,
 };

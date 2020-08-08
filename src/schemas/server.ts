@@ -430,4 +430,26 @@ export default {
     ['type', DATA_TYPES.uint8],
     ['data', DATA_TYPES.textbig],
   ],
+
+  [SERVER_PACKETS.SYNC_AUTH]: [['challenge', DATA_TYPES.text]],
+
+  [SERVER_PACKETS.SYNC_INIT]: [
+    ['sequence', DATA_TYPES.uint32],
+    ['timestamp', DATA_TYPES.float64],
+  ],
+
+  [SERVER_PACKETS.SYNC_SUBSCRIBE]: [
+    ['active', DATA_TYPES.boolean],
+    ['type', DATA_TYPES.text],
+    ['id', DATA_TYPES.text],
+  ],
+
+  [SERVER_PACKETS.SYNC_UPDATE]: [
+    ['sequence', DATA_TYPES.uint32],
+    ['type', DATA_TYPES.text],
+    ['id', DATA_TYPES.text],
+    ['data', DATA_TYPES.textbig],
+    ['timestamp', DATA_TYPES.float64],
+    ['event', DATA_TYPES.textbig],
+  ],
 };

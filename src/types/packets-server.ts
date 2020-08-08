@@ -1605,3 +1605,83 @@ export interface ServerCustom extends ProtocolPacket {
    */
   data?: string;
 }
+
+/**
+ * Authentication challenge for sync service.
+ */
+export interface SyncAuth extends ProtocolPacket {
+  /**
+   * Randomly generated challenge.
+   */
+  challenge?: string;
+}
+
+/**
+ * Initialize a sync connection.
+ */
+export interface SyncInit extends ProtocolPacket {
+  /**
+   * Next sequence number known by game server.
+   */
+  sequence?: number;
+
+  /**
+   * Current time at game server.
+   */
+  timestamp?: number;
+}
+
+/**
+ * Object subscription on this sync connection.
+ */
+export interface SyncSubscribe extends ProtocolPacket {
+  /**
+   * Subscription active? (True: subscribe, false: unsubscribe)
+   */
+  active?: boolean;
+
+  /**
+   * Object type.
+   */
+  type?: string;
+
+  /**
+   * Object id.
+   */
+  id?: string;
+}
+
+/**
+ * Object data update from game server to sync service.
+ */
+export interface SyncUpdate extends ProtocolPacket {
+  /**
+   * Monotonically increasing sequence number.
+   */
+  sequence?: number;
+
+  /**
+   * Object type.
+   */
+  type?: string;
+
+  /**
+   * Object id.
+   */
+  id?: string;
+
+  /**
+   * Object data, as JSON.
+   */
+  data?: string;
+
+  /**
+   * Update time.
+   */
+  timestamp?: number;
+
+  /**
+   * Event associated with this object data update, as JSON.
+   */
+  event?: string;
+}
