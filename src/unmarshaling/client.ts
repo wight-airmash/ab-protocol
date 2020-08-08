@@ -21,11 +21,17 @@ import {
   Say,
   Teamchat,
   Votemute,
+  SyncStart,
+  SyncAuth,
+  SyncInit,
+  SyncUpdate,
+  SyncAck,
   Localping,
 } from '../types/packets-client';
 
 const staticAckPacket: Ack = { c: 5 };
 const staticScoredetailedPacket: Scoredetailed = { c: 12 };
+const staticSyncStartPacket: SyncStart = { c: 200 };
 
 export default {
   [packet.LOGIN]: (buffer: ArrayBuffer): Login => {
@@ -321,6 +327,154 @@ export default {
     // id, uint16
     msg.id = dataView.getUint16(readIndex, true);
     readIndex += 2;
+
+    return msg;
+  },
+
+  [packet.SYNC_START]: (): SyncStart => staticSyncStartPacket,
+
+  [packet.SYNC_AUTH]: (buffer: ArrayBuffer): SyncAuth => {
+    const msg: SyncAuth = { c: 201 };
+    const dataView = new DataView(buffer);
+
+    let readIndex = 1;
+
+    // response, text
+    {
+      const stringLength = dataView.getUint8(readIndex);
+      const encodedString = new Uint8Array(stringLength);
+
+      readIndex += 1;
+
+      for (let charIndex = 0; charIndex < stringLength; charIndex += 1) {
+        encodedString[charIndex] = dataView.getUint8(readIndex + charIndex);
+      }
+
+      msg.response = decodeUTF8(encodedString);
+      readIndex += stringLength;
+    }
+
+    return msg;
+  },
+
+  [packet.SYNC_INIT]: (buffer: ArrayBuffer): SyncInit => {
+    const msg: SyncInit = { c: 202 };
+    const dataView = new DataView(buffer);
+
+    let readIndex = 1;
+
+    // sequence, uint32
+    msg.sequence = dataView.getUint32(readIndex, true);
+    readIndex += 4;
+
+    // timestamp, float64
+    msg.timestamp = dataView.getFloat64(readIndex, true);
+    readIndex += 8;
+
+    // serverId, text
+    {
+      const stringLength = dataView.getUint8(readIndex);
+      const encodedString = new Uint8Array(stringLength);
+
+      readIndex += 1;
+
+      for (let charIndex = 0; charIndex < stringLength; charIndex += 1) {
+        encodedString[charIndex] = dataView.getUint8(readIndex + charIndex);
+      }
+
+      msg.serverId = decodeUTF8(encodedString);
+      readIndex += stringLength;
+    }
+
+    // wsEndpoint, text
+    {
+      const stringLength = dataView.getUint8(readIndex);
+      const encodedString = new Uint8Array(stringLength);
+
+      readIndex += 1;
+
+      for (let charIndex = 0; charIndex < stringLength; charIndex += 1) {
+        encodedString[charIndex] = dataView.getUint8(readIndex + charIndex);
+      }
+
+      msg.wsEndpoint = decodeUTF8(encodedString);
+      readIndex += stringLength;
+    }
+
+    return msg;
+  },
+
+  [packet.SYNC_UPDATE]: (buffer: ArrayBuffer): SyncUpdate => {
+    const msg: SyncUpdate = { c: 204 };
+    const dataView = new DataView(buffer);
+
+    let readIndex = 1;
+
+    // complete, boolean
+    msg.complete = dataView.getUint8(readIndex) !== 0;
+    readIndex += 1;
+
+    // type, text
+    {
+      const stringLength = dataView.getUint8(readIndex);
+      const encodedString = new Uint8Array(stringLength);
+
+      readIndex += 1;
+
+      for (let charIndex = 0; charIndex < stringLength; charIndex += 1) {
+        encodedString[charIndex] = dataView.getUint8(readIndex + charIndex);
+      }
+
+      msg.type = decodeUTF8(encodedString);
+      readIndex += stringLength;
+    }
+
+    // id, text
+    {
+      const stringLength = dataView.getUint8(readIndex);
+      const encodedString = new Uint8Array(stringLength);
+
+      readIndex += 1;
+
+      for (let charIndex = 0; charIndex < stringLength; charIndex += 1) {
+        encodedString[charIndex] = dataView.getUint8(readIndex + charIndex);
+      }
+
+      msg.id = decodeUTF8(encodedString);
+      readIndex += stringLength;
+    }
+
+    // data, textbig
+    {
+      const stringLength = dataView.getUint16(readIndex, true);
+      const encodedString = new Uint8Array(stringLength);
+
+      readIndex += 2;
+
+      for (let charIndex = 0; charIndex < stringLength; charIndex += 1) {
+        encodedString[charIndex] = dataView.getUint8(readIndex + charIndex);
+      }
+
+      msg.data = decodeUTF8(encodedString);
+      readIndex += stringLength;
+    }
+
+    return msg;
+  },
+
+  [packet.SYNC_ACK]: (buffer: ArrayBuffer): SyncAck => {
+    const msg: SyncAck = { c: 205 };
+    const dataView = new DataView(buffer);
+
+    let readIndex = 1;
+
+    // sequence, uint32
+    msg.sequence = dataView.getUint32(readIndex, true);
+    readIndex += 4;
+
+    // result, uint8
+    msg.result = dataView.getUint8(readIndex);
+    readIndex += 1;
 
     return msg;
   },

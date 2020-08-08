@@ -19,6 +19,10 @@ import {
   Say,
   Teamchat,
   Votemute,
+  SyncAuth,
+  SyncInit,
+  SyncUpdate,
+  SyncAck,
   Localping,
 } from '../types/packets-client';
 
@@ -35,6 +39,14 @@ const staticScoredetailedPacket = ((): ArrayBuffer => {
   const dataView = new DataView(buffer);
 
   dataView.setUint8(0, 12);
+
+  return buffer;
+})();
+const staticSyncStartPacket = ((): ArrayBuffer => {
+  const buffer = new ArrayBuffer(1);
+  const dataView = new DataView(buffer);
+
+  dataView.setUint8(0, 200);
 
   return buffer;
 })();
@@ -326,6 +338,142 @@ export default {
     // id, uint16
     dataView.setUint16(offset, msg.id, true);
     offset += 2;
+
+    return buffer;
+  },
+
+  [packet.SYNC_START]: (): ArrayBuffer => staticSyncStartPacket,
+
+  [packet.SYNC_AUTH]: (msg: SyncAuth): ArrayBuffer => {
+    // Root strings size calculation
+    const response = encodeUTF8(msg.response);
+
+    const buffer = new ArrayBuffer(2 + response.length);
+    const dataView = new DataView(buffer);
+
+    let offset = 0;
+
+    dataView.setUint8(offset, msg.c);
+    offset += 1;
+
+    // response, text
+    dataView.setUint8(offset, response.length);
+    offset += 1;
+
+    for (let charOffset = 0; charOffset < response.length; charOffset += 1) {
+      dataView.setUint8(offset + charOffset, response[charOffset]);
+    }
+
+    return buffer;
+  },
+
+  [packet.SYNC_INIT]: (msg: SyncInit): ArrayBuffer => {
+    // Root strings size calculation
+    const serverId = encodeUTF8(msg.serverId);
+    const wsEndpoint = encodeUTF8(msg.wsEndpoint);
+
+    const buffer = new ArrayBuffer(15 + serverId.length + wsEndpoint.length);
+    const dataView = new DataView(buffer);
+
+    let offset = 0;
+
+    dataView.setUint8(offset, msg.c);
+    offset += 1;
+
+    // sequence, uint32
+    dataView.setUint32(offset, msg.sequence, true);
+    offset += 4;
+
+    // timestamp, float64
+    dataView.setFloat64(offset, msg.timestamp, true);
+    offset += 8;
+
+    // serverId, text
+    dataView.setUint8(offset, serverId.length);
+    offset += 1;
+
+    for (let charOffset = 0; charOffset < serverId.length; charOffset += 1) {
+      dataView.setUint8(offset + charOffset, serverId[charOffset]);
+    }
+
+    offset += serverId.length;
+
+    // wsEndpoint, text
+    dataView.setUint8(offset, wsEndpoint.length);
+    offset += 1;
+
+    for (let charOffset = 0; charOffset < wsEndpoint.length; charOffset += 1) {
+      dataView.setUint8(offset + charOffset, wsEndpoint[charOffset]);
+    }
+
+    return buffer;
+  },
+
+  [packet.SYNC_UPDATE]: (msg: SyncUpdate): ArrayBuffer => {
+    // Root strings size calculation
+    const type = encodeUTF8(msg.type);
+    const id = encodeUTF8(msg.id);
+    const data = encodeUTF8(msg.data);
+
+    const buffer = new ArrayBuffer(6 + type.length + id.length + data.length);
+    const dataView = new DataView(buffer);
+
+    let offset = 0;
+
+    dataView.setUint8(offset, msg.c);
+    offset += 1;
+
+    // complete, boolean
+    dataView.setUint8(offset, msg.complete === false ? 0 : 1);
+    offset += 1;
+
+    // type, text
+    dataView.setUint8(offset, type.length);
+    offset += 1;
+
+    for (let charOffset = 0; charOffset < type.length; charOffset += 1) {
+      dataView.setUint8(offset + charOffset, type[charOffset]);
+    }
+
+    offset += type.length;
+
+    // id, text
+    dataView.setUint8(offset, id.length);
+    offset += 1;
+
+    for (let charOffset = 0; charOffset < id.length; charOffset += 1) {
+      dataView.setUint8(offset + charOffset, id[charOffset]);
+    }
+
+    offset += id.length;
+
+    // data, textbig
+    dataView.setUint16(offset, data.length, true);
+    offset += 2;
+
+    for (let charOffset = 0; charOffset < data.length; charOffset += 1) {
+      dataView.setUint8(offset + charOffset, data[charOffset]);
+    }
+
+    return buffer;
+  },
+
+  [packet.SYNC_ACK]: (msg: SyncAck): ArrayBuffer => {
+    const buffer = new ArrayBuffer(6);
+    const dataView = new DataView(buffer);
+
+    let offset = 0;
+
+    dataView.setUint8(offset, msg.c);
+    offset += 1;
+
+    // sequence, uint32
+    dataView.setUint32(offset, msg.sequence, true);
+    offset += 4;
+
+    // result, uint8
+    dataView.setUint8(offset, msg.result);
+    offset += 1;
 
     return buffer;
   },
