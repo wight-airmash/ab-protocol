@@ -51,6 +51,10 @@ import {
   ScoreDetailedBtr,
   ServerMessage,
   ServerCustom,
+  SyncAuth,
+  SyncInit,
+  SyncSubscribe,
+  SyncUpdate,
 } from '../types/packets-server';
 
 const staticBackupPacket = ((): ArrayBuffer => {
@@ -1936,6 +1940,151 @@ export default {
 
     for (let charOffset = 0; charOffset < data.length; charOffset += 1) {
       dataView.setUint8(offset + charOffset, data[charOffset]);
+    }
+
+    return buffer;
+  },
+
+  [packet.SYNC_AUTH]: (msg: SyncAuth): ArrayBuffer => {
+    // Root strings size calculation
+    const challenge = encodeUTF8(msg.challenge);
+
+    const buffer = new ArrayBuffer(2 + challenge.length);
+    const dataView = new DataView(buffer);
+
+    let offset = 0;
+
+    dataView.setUint8(offset, msg.c);
+    offset += 1;
+
+    // challenge, text
+    dataView.setUint8(offset, challenge.length);
+    offset += 1;
+
+    for (let charOffset = 0; charOffset < challenge.length; charOffset += 1) {
+      dataView.setUint8(offset + charOffset, challenge[charOffset]);
+    }
+
+    return buffer;
+  },
+
+  [packet.SYNC_INIT]: (msg: SyncInit): ArrayBuffer => {
+    const buffer = new ArrayBuffer(13);
+    const dataView = new DataView(buffer);
+
+    let offset = 0;
+
+    dataView.setUint8(offset, msg.c);
+    offset += 1;
+
+    // sequence, uint32
+    dataView.setUint32(offset, msg.sequence, true);
+    offset += 4;
+
+    // timestamp, float64
+    dataView.setFloat64(offset, msg.timestamp, true);
+    offset += 8;
+
+    return buffer;
+  },
+
+  [packet.SYNC_SUBSCRIBE]: (msg: SyncSubscribe): ArrayBuffer => {
+    // Root strings size calculation
+    const type = encodeUTF8(msg.type);
+    const id = encodeUTF8(msg.id);
+
+    const buffer = new ArrayBuffer(4 + type.length + id.length);
+    const dataView = new DataView(buffer);
+
+    let offset = 0;
+
+    dataView.setUint8(offset, msg.c);
+    offset += 1;
+
+    // active, boolean
+    dataView.setUint8(offset, msg.active === false ? 0 : 1);
+    offset += 1;
+
+    // type, text
+    dataView.setUint8(offset, type.length);
+    offset += 1;
+
+    for (let charOffset = 0; charOffset < type.length; charOffset += 1) {
+      dataView.setUint8(offset + charOffset, type[charOffset]);
+    }
+
+    offset += type.length;
+
+    // id, text
+    dataView.setUint8(offset, id.length);
+    offset += 1;
+
+    for (let charOffset = 0; charOffset < id.length; charOffset += 1) {
+      dataView.setUint8(offset + charOffset, id[charOffset]);
+    }
+
+    return buffer;
+  },
+
+  [packet.SYNC_UPDATE]: (msg: SyncUpdate): ArrayBuffer => {
+    // Root strings size calculation
+    const type = encodeUTF8(msg.type);
+    const id = encodeUTF8(msg.id);
+    const data = encodeUTF8(msg.data);
+    const event = encodeUTF8(msg.event);
+
+    const buffer = new ArrayBuffer(19 + type.length + id.length + data.length + event.length);
+    const dataView = new DataView(buffer);
+
+    let offset = 0;
+
+    dataView.setUint8(offset, msg.c);
+    offset += 1;
+
+    // sequence, uint32
+    dataView.setUint32(offset, msg.sequence, true);
+    offset += 4;
+
+    // type, text
+    dataView.setUint8(offset, type.length);
+    offset += 1;
+
+    for (let charOffset = 0; charOffset < type.length; charOffset += 1) {
+      dataView.setUint8(offset + charOffset, type[charOffset]);
+    }
+
+    offset += type.length;
+
+    // id, text
+    dataView.setUint8(offset, id.length);
+    offset += 1;
+
+    for (let charOffset = 0; charOffset < id.length; charOffset += 1) {
+      dataView.setUint8(offset + charOffset, id[charOffset]);
+    }
+
+    offset += id.length;
+
+    // data, textbig
+    dataView.setUint16(offset, data.length, true);
+    offset += 2;
+
+    for (let charOffset = 0; charOffset < data.length; charOffset += 1) {
+      dataView.setUint8(offset + charOffset, data[charOffset]);
+    }
+
+    offset += data.length;
+
+    // timestamp, float64
+    dataView.setFloat64(offset, msg.timestamp, true);
+    offset += 8;
+
+    // event, textbig
+    dataView.setUint16(offset, event.length, true);
+    offset += 2;
+
+    for (let charOffset = 0; charOffset < event.length; charOffset += 1) {
+      dataView.setUint8(offset + charOffset, event[charOffset]);
     }
 
     return buffer;

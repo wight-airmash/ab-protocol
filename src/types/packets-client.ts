@@ -178,6 +178,86 @@ export interface Votemute extends ProtocolPacket {
 }
 
 /**
+ * Start a sync connection.
+ */
+export interface SyncStart extends ProtocolPacket {}
+
+/**
+ * Authenticate a sync connection, by responding to server challenge.
+ */
+export interface SyncAuth extends ProtocolPacket {
+  /**
+   * Token containing signed challenge.
+   */
+  response?: string;
+}
+
+/**
+ * Initialize a sync connection.
+ */
+export interface SyncInit extends ProtocolPacket {
+  /**
+   * Next sequence number to be used by server.
+   */
+  sequence?: number;
+
+  /**
+   * Current time at sync service.
+   */
+  timestamp?: number;
+
+  /**
+   * Server identity (region-room).
+   */
+  serverId?: string;
+
+  /**
+   * Publc websocket endpoint (wss://host/path) of server.
+   */
+  wsEndpoint?: string;
+}
+
+/**
+ * Object data update from sync service to game server.
+ */
+export interface SyncUpdate extends ProtocolPacket {
+  /**
+   * Completely replace object?
+   */
+  complete?: boolean;
+
+  /**
+   * Object type.
+   */
+  type?: string;
+
+  /**
+   * Object id.
+   */
+  id?: string;
+
+  /**
+   * Object data, as JSON.
+   */
+  data?: string;
+}
+
+/**
+ * Acknowledgement of an object data update from the game server.
+ */
+export interface SyncAck extends ProtocolPacket {
+  /**
+   * Sequence number of the update.
+   */
+  sequence?: number;
+
+  /**
+   * Result of update. Zero: updated without error. Non-zero: error code.
+   */
+  result?: number;
+}
+
+/**
  * Currently not used.
  */
 export interface Localping extends ProtocolPacket {
