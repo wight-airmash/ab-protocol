@@ -1339,7 +1339,7 @@ export default {
   },
 
   [packet.MOB_UPDATE]: (msg: MobUpdate): ArrayBuffer => {
-    const buffer = new ArrayBuffer(22);
+    const buffer = new ArrayBuffer(24);
     const dataView = new DataView(buffer);
 
     let offset = 0;
@@ -1385,6 +1385,10 @@ export default {
 
     // maxSpeed, speed
     dataView.setUint16(offset, msg.maxSpeed * 1638.4 + 32768, true);
+    offset += 2;
+
+    // ownerId, uint16
+    dataView.setUint16(offset, msg.ownerId, true);
     offset += 2;
 
     return buffer;

@@ -1228,6 +1228,10 @@ export default {
     msg.maxSpeed = (dataView.getUint16(readIndex, true) - 32768) / 1638.4;
     readIndex += 2;
 
+    // ownerId, uint16
+    msg.ownerId = dataView.getUint16(readIndex, true);
+    readIndex += 2;
+
     return msg;
   },
 

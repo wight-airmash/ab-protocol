@@ -1121,6 +1121,11 @@ export interface MobUpdate extends ProtocolPacket {
    * Depends on owner upgrades at the moment of fire.
    */
   maxSpeed?: number;
+
+  /**
+   * Owner id of this projectile, or zero.
+   */
+  ownerId?: number;
 }
 
 /**

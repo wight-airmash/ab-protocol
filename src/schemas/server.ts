@@ -293,6 +293,7 @@ export default {
     ['accelX', DATA_TYPES.accel],
     ['accelY', DATA_TYPES.accel],
     ['maxSpeed', DATA_TYPES.speed],
+    ['ownerId', DATA_TYPES.uint16],
   ],
 
   [SERVER_PACKETS.MOB_UPDATE_STATIONARY]: [
