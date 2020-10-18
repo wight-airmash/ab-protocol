@@ -1,10 +1,12 @@
 /* eslint-disable max-classes-per-file */
-export class ProtocolError {
+export class ProtocolError extends Error {
   public name: string;
 
   public message: string;
 
   constructor(message = '') {
+    super(message);
+
     this.name = this.constructor.name;
     this.message = message;
   }
