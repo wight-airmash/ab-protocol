@@ -1,5 +1,14 @@
 ## Future version (unversioned)
 
+## 6.1.0 (October 18, 2020)
+
+Features:
+
+- New sync service client packets: `SYNC_START`, `SYNC_AUTH`, `SYNC_INIT`, `SYNC_UPDATE`, `SYNC_ACK`.
+- New sync service server packets: `SYNC_AUTH`, `SYNC_INIT`, `SYNC_SUBSCRIBE`, `SYNC_UPDATE`.
+- New server error types.
+- New field `ownerId` for server packets `MOB_UPDATE`.
+
 ## 6.0.0 (February 19, 2020)
 
 Since this version, the protocol contains changes that differ from the classic version. This version is still compatible with known clients of the game.
