@@ -1,6 +1,6 @@
 ## Future version (unversioned)
 
-## 6.1.0 (October 18, 2020)
+## 6.1.0 (October 21, 2020)
 
 Features:
 
