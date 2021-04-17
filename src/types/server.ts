@@ -122,8 +122,19 @@ export enum PLAYER_UPGRADE_TYPES {
  * SERVER_PACKETS.SERVER_CUSTOM types.
  */
 export enum SERVER_CUSTOM_TYPES {
+  /**
+   * For the conclusion of BTR and CTF game types.
+   *
+   * Note: these are the only two types that are compatible with Q-bots;
+   *       other SERVER_CUSTOM types must not be sent to these clients. 
+   */
   BTR = 1,
   CTF = 2,
+
+  /**
+   * For suggesting to the player a different game server to switch to.
+   */
+  SWITCH_GAME_SUGGESTION = 100,
 }
 
 /**
