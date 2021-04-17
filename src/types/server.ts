@@ -126,7 +126,7 @@ export enum SERVER_CUSTOM_TYPES {
    * For the conclusion of BTR and CTF game types.
    *
    * Note: these are the only two types that are compatible with Q-bots;
-   *       other SERVER_CUSTOM types must not be sent to these clients. 
+   *       other SERVER_CUSTOM types must not be sent to these clients.
    */
   BTR = 1,
   CTF = 2,
