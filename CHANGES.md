@@ -1,5 +1,11 @@
 ## Future version (unversioned)
 
+## 6.2.0 (April 17, 2021)
+
+Features:
+
+- New `SWITCH_GAME_SUGGESTION` type in `SERVER_CUSTOM_TYPES`.
+
 ## 6.1.0 (October 21, 2020)
 
 Features:
